@@ -18,11 +18,14 @@
 
 #![allow(deprecated)]
 #![allow(clippy::arithmetic_side_effects)]
+
+use alloc::vec::Vec;
 use {
     crate::{
         declare_deprecated_sysvar_id, fee_calculator::FeeCalculator, hash::Hash, sysvar::Sysvar,
     },
-    std::{cmp::Ordering, collections::BinaryHeap, iter::FromIterator, ops::Deref},
+    alloc::collections::BinaryHeap,
+    core::{cmp::Ordering, iter::FromIterator, ops::Deref},
 };
 
 #[deprecated(
@@ -162,6 +165,7 @@ impl Deref for RecentBlockhashes {
 
 #[cfg(test)]
 mod tests {
+    use alloc::vec;
     use {super::*, crate::clock::MAX_PROCESSING_AGE};
 
     #[test]

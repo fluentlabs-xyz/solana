@@ -1,10 +1,11 @@
+use alloc::vec::Vec;
 use {
     crate::{clock::Epoch, pubkey::Pubkey},
+    alloc::collections::BTreeMap,
     serde_derive::{Deserialize, Serialize},
-    std::collections::BTreeMap,
 };
 
-#[derive(Debug, Default, Serialize, Deserialize, PartialEq, Eq, Clone, AbiExample)]
+#[derive(Debug, Default, Serialize, Deserialize, PartialEq, Eq, Clone/*, AbiExample*/)]
 pub struct AuthorizedVoters {
     authorized_voters: BTreeMap<Epoch, Pubkey>,
 }
@@ -77,7 +78,7 @@ impl AuthorizedVoters {
         self.authorized_voters.get(&epoch).is_some()
     }
 
-    pub fn iter(&self) -> std::collections::btree_map::Iter<Epoch, Pubkey> {
+    pub fn iter(&self) -> alloc::collections::btree_map::Iter<Epoch, Pubkey> {
         self.authorized_voters.iter()
     }
 

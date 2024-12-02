@@ -466,9 +466,14 @@
 #![allow(incomplete_features)]
 #![cfg_attr(RUSTC_WITH_SPECIALIZATION, feature(specialization))]
 #![cfg_attr(RUSTC_NEEDS_PROC_MACRO_HYGIENE, feature(proc_macro_hygiene))]
+#![feature(error_in_core)]
+#![no_std]
 
 // Allows macro expansion of `use ::solana_program::*` to work within this crate
+extern crate alloc;
+extern crate core;
 extern crate self as solana_program;
+extern crate fluentbase_sdk;
 
 pub mod account_info;
 pub mod address_lookup_table;
@@ -544,13 +549,13 @@ pub mod address_lookup_table_account {
     pub use crate::address_lookup_table::AddressLookupTableAccount;
 }
 
-#[cfg(target_os = "solana")]
-pub use solana_sdk_macro::wasm_bindgen_stub as wasm_bindgen;
-/// Re-export of [wasm-bindgen].
-///
-/// [wasm-bindgen]: https://rustwasm.github.io/docs/wasm-bindgen/
-#[cfg(not(target_os = "solana"))]
-pub use wasm_bindgen::prelude::wasm_bindgen;
+// #[cfg(all(target_os = "solana", not(target_arch = "wasm32")))]
+// pub use solana_sdk_macro::wasm_bindgen_stub as wasm_bindgen;
+// /// Re-export of [wasm-bindgen].
+// ///
+// /// [wasm-bindgen]: https://rustwasm.github.io/docs/wasm-bindgen/
+// #[cfg(all(not(target_os = "solana"), not(target_arch = "wasm32")))]
+// pub use wasm_bindgen::prelude::wasm_bindgen;
 
 /// The [config native program][np].
 ///
@@ -569,6 +574,7 @@ pub mod sdk_ids {
             config, ed25519_program, feature, incinerator, loader_v4, secp256k1_program,
             solana_program::pubkey::Pubkey, stake, system_program, sysvar, vote,
         },
+        alloc::{vec, vec::Vec},
         lazy_static::lazy_static,
     };
 
@@ -609,7 +615,7 @@ pub use solana_sdk_macro::program_declare_deprecated_id as declare_deprecated_id
 /// ```
 /// # // wrapper is used so that the macro invocation occurs in the item position
 /// # // rather than in the statement position which isn't allowed.
-/// use std::str::FromStr;
+/// use core::str::FromStr;
 /// use solana_program::{declare_id, pubkey::Pubkey};
 ///
 /// # mod item_wrapper {
@@ -629,7 +635,7 @@ pub use solana_sdk_macro::program_declare_id as declare_id;
 /// # Example
 ///
 /// ```
-/// use std::str::FromStr;
+/// use core::str::FromStr;
 /// use solana_program::{pubkey, pubkey::Pubkey};
 ///
 /// static ID: Pubkey = pubkey!("My11111111111111111111111111111111111111111");
@@ -642,8 +648,8 @@ pub use solana_sdk_macro::program_pubkey as pubkey;
 #[macro_use]
 extern crate serde_derive;
 
-#[macro_use]
-extern crate solana_frozen_abi_macro;
+// #[macro_use]
+// extern crate solana_frozen_abi_macro;
 
 /// Convenience macro for doing integer division where the operation's safety
 /// can be checked at compile-time.

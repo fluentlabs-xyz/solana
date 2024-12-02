@@ -1,14 +1,15 @@
 //! Account information.
 
+use alloc::boxed::Box;
 use {
     crate::{
         clock::Epoch, debug_account_data::*, entrypoint::MAX_PERMITTED_DATA_INCREASE,
         program_error::ProgramError, program_memory::sol_memset, pubkey::Pubkey,
     },
-    std::{
+    alloc::rc::Rc,
+    core::{
         cell::{Ref, RefCell, RefMut},
         fmt,
-        rc::Rc,
         slice::from_raw_parts_mut,
     },
 };
@@ -186,7 +187,7 @@ impl<'a> AccountInfo<'a> {
     pub fn assign(&self, new_owner: &Pubkey) {
         // Set the non-mut owner field
         unsafe {
-            std::ptr::write_volatile(
+            core::ptr::write_volatile(
                 self.owner as *const Pubkey as *mut [u8; 32],
                 new_owner.to_bytes(),
             );
@@ -376,7 +377,7 @@ pub fn next_account_info<'a, 'b, I: Iterator<Item = &'a AccountInfo<'b>>>(
 /// # Ok::<(), ProgramError>(())
 /// ```
 pub fn next_account_infos<'a, 'b: 'a>(
-    iter: &mut std::slice::Iter<'a, AccountInfo<'b>>,
+    iter: &mut core::slice::Iter<'a, AccountInfo<'b>>,
     count: usize,
 ) -> Result<&'a [AccountInfo<'b>], ProgramError> {
     let accounts = iter.as_slice();
@@ -396,6 +397,7 @@ impl<'a> AsRef<AccountInfo<'a>> for AccountInfo<'a> {
 
 #[cfg(test)]
 mod tests {
+    use alloc::{format, vec};
     use super::*;
 
     #[test]

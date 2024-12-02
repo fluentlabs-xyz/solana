@@ -14,18 +14,20 @@
 //! upgrade, not by using the non-upgradeable loader.
 //!
 //! [`loader_upgradeable_instruction`]: crate::loader_upgradeable_instruction
-
-use crate::{
-    instruction::{AccountMeta, Instruction, InstructionError},
-    loader_upgradeable_instruction::UpgradeableLoaderInstruction,
-    pubkey::Pubkey,
-    system_instruction, sysvar,
+use {
+    crate::{
+        instruction::{AccountMeta, Instruction, InstructionError},
+        loader_upgradeable_instruction::UpgradeableLoaderInstruction,
+        pubkey::Pubkey,
+        system_instruction, sysvar,
+    },
+    alloc::{vec, vec::Vec},
 };
 
 crate::declare_id!("BPFLoaderUpgradeab1e11111111111111111111111");
 
 /// Upgradeable loader account states
-#[derive(Debug, Serialize, Deserialize, PartialEq, Eq, Clone, Copy, AbiExample)]
+#[derive(Debug, Serialize, Deserialize, PartialEq, Eq, Clone, Copy/*, AbiExample*/)]
 pub enum UpgradeableLoaderState {
     /// Account is not initialized.
     Uninitialized,

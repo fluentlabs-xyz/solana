@@ -1,12 +1,21 @@
 //! `Pubkey` Javascript interface
 #![cfg(target_arch = "wasm32")]
 #![allow(non_snake_case)]
-use {
-    crate::{pubkey::*, wasm::display_to_jsvalue},
-    js_sys::{Array, Uint8Array},
-    wasm_bindgen::{prelude::*, JsCast},
-};
+use crate::pubkey::*;
+// #[cfg(feature = "wbg")]
+// use crate::wasm::display_to_jsvalue;
+#[cfg(feature = "wbg")]
+use js_sys::{Array, Uint8Array};
+#[cfg(feature = "wbg")]
+use wasm_bindgen::{prelude::*, JsCast};
+use alloc::boxed::Box;
+use alloc::string::String;
+use alloc::string::ToString;
+use alloc::vec::Vec;
+use alloc::vec;
+use alloc::format;
 
+#[cfg(feature = "wbg")]
 fn js_value_to_seeds_vec(array_of_uint8_arrays: &[JsValue]) -> Result<Vec<Vec<u8>>, JsValue> {
     let vec_vec_u8 = array_of_uint8_arrays
         .iter()
@@ -24,40 +33,43 @@ fn js_value_to_seeds_vec(array_of_uint8_arrays: &[JsValue]) -> Result<Vec<Vec<u8
     }
 }
 
-#[wasm_bindgen]
+#[cfg_attr(wbg, feature(wasm_bindgen))]
+// #[wasm_bindgen]
 impl Pubkey {
-    /// Create a new Pubkey object
-    ///
-    /// * `value` - optional public key as a base58 encoded string, `Uint8Array`, `[number]`
-    #[wasm_bindgen(constructor)]
-    pub fn constructor(value: JsValue) -> Result<Pubkey, JsValue> {
-        if let Some(base58_str) = value.as_string() {
-            base58_str.parse::<Pubkey>().map_err(display_to_jsvalue)
-        } else if let Some(uint8_array) = value.dyn_ref::<Uint8Array>() {
-            Pubkey::try_from(uint8_array.to_vec())
-                .map_err(|err| JsValue::from(format!("Invalid Uint8Array pubkey: {err:?}")))
-        } else if let Some(array) = value.dyn_ref::<Array>() {
-            let mut bytes = vec![];
-            let iterator = js_sys::try_iter(&array.values())?.expect("array to be iterable");
-            for x in iterator {
-                let x = x?;
-
-                if let Some(n) = x.as_f64() {
-                    if n >= 0. && n <= 255. {
-                        bytes.push(n as u8);
-                        continue;
-                    }
-                }
-                return Err(format!("Invalid array argument: {:?}", x).into());
-            }
-            Pubkey::try_from(bytes)
-                .map_err(|err| JsValue::from(format!("Invalid Array pubkey: {err:?}")))
-        } else if value.is_undefined() {
-            Ok(Pubkey::default())
-        } else {
-            Err("Unsupported argument".into())
-        }
-    }
+    // /// Create a new Pubkey object
+    // ///
+    // /// * `value` - optional public key as a base58 encoded string, `Uint8Array`, `[number]`
+    // #[cfg(feature = "wbg")]
+    // #[cfg_attr(wbg, feature(wasm_bindgen(skip)))]
+    // // #[wasm_bindgen(constructor)]
+    // pub fn constructor(value: JsValue) -> Result<Pubkey, JsValue> {
+    //     if let Some(base58_str) = value.as_string() {
+    //         base58_str.parse::<Pubkey>().map_err(display_to_jsvalue)
+    //     } else if let Some(uint8_array) = value.dyn_ref::<Uint8Array>() {
+    //         Pubkey::try_from(uint8_array.to_vec())
+    //             .map_err(|err| JsValue::from(format!("Invalid Uint8Array pubkey: {err:?}")))
+    //     } else if let Some(array) = value.dyn_ref::<Array>() {
+    //         let mut bytes = vec![];
+    //         let iterator = js_sys::try_iter(&array.values())?.expect("array to be iterable");
+    //         for x in iterator {
+    //             let x = x?;
+    //
+    //             if let Some(n) = x.as_f64() {
+    //                 if n >= 0. && n <= 255. {
+    //                     bytes.push(n as u8);
+    //                     continue;
+    //                 }
+    //             }
+    //             return Err(format!("Invalid array argument: {:?}", x).into());
+    //         }
+    //         Pubkey::try_from(bytes)
+    //             .map_err(|err| JsValue::from(format!("Invalid Array pubkey: {err:?}")))
+    //     } else if value.is_undefined() {
+    //         Ok(Pubkey::default())
+    //     } else {
+    //         Err("Unsupported argument".into())
+    //     }
+    // }
 
     /// Return the base58 string representation of the public key
     pub fn toString(&self) -> String {
@@ -79,45 +91,48 @@ impl Pubkey {
         self.0.clone().into()
     }
 
-    /// Derive a Pubkey from another Pubkey, string seed, and a program id
-    pub fn createWithSeed(base: &Pubkey, seed: &str, owner: &Pubkey) -> Result<Pubkey, JsValue> {
-        Pubkey::create_with_seed(base, seed, owner).map_err(display_to_jsvalue)
-    }
+    // /// Derive a Pubkey from another Pubkey, string seed, and a program id
+    // #[cfg(feature = "wbg")]
+    // pub fn createWithSeed(base: &Pubkey, seed: &str, owner: &Pubkey) -> Result<Pubkey, JsValue> {
+    //     Pubkey::create_with_seed(base, seed, owner).map_err(display_to_jsvalue)
+    // }
 
-    /// Derive a program address from seeds and a program id
-    pub fn createProgramAddress(
-        seeds: Box<[JsValue]>,
-        program_id: &Pubkey,
-    ) -> Result<Pubkey, JsValue> {
-        let seeds_vec = js_value_to_seeds_vec(&seeds)?;
-        let seeds_slice = seeds_vec
-            .iter()
-            .map(|seed| seed.as_slice())
-            .collect::<Vec<_>>();
+    // /// Derive a program address from seeds and a program id
+    // #[cfg(feature = "wbg")]
+    // pub fn createProgramAddress(
+    //     seeds: Box<[JsValue]>,
+    //     program_id: &Pubkey,
+    // ) -> Result<Pubkey, JsValue> {
+    //     let seeds_vec = js_value_to_seeds_vec(&seeds)?;
+    //     let seeds_slice = seeds_vec
+    //         .iter()
+    //         .map(|seed| seed.as_slice())
+    //         .collect::<Vec<_>>();
+    //
+    //     Pubkey::create_program_address(seeds_slice.as_slice(), program_id)
+    //         .map_err(display_to_jsvalue)
+    // }
 
-        Pubkey::create_program_address(seeds_slice.as_slice(), program_id)
-            .map_err(display_to_jsvalue)
-    }
-
-    /// Find a valid program address
-    ///
-    /// Returns:
-    /// * `[PubKey, number]` - the program address and bump seed
-    pub fn findProgramAddress(
-        seeds: Box<[JsValue]>,
-        program_id: &Pubkey,
-    ) -> Result<JsValue, JsValue> {
-        let seeds_vec = js_value_to_seeds_vec(&seeds)?;
-        let seeds_slice = seeds_vec
-            .iter()
-            .map(|seed| seed.as_slice())
-            .collect::<Vec<_>>();
-
-        let (address, bump_seed) = Pubkey::find_program_address(seeds_slice.as_slice(), program_id);
-
-        let result = Array::new_with_length(2);
-        result.set(0, address.into());
-        result.set(1, bump_seed.into());
-        Ok(result.into())
-    }
+    // /// Find a valid program address
+    // ///
+    // /// Returns:
+    // /// * `[PubKey, number]` - the program address and bump seed
+    // #[cfg(feature = "wbg")]
+    // pub fn findProgramAddress(
+    //     seeds: Box<[JsValue]>,
+    //     program_id: &Pubkey,
+    // ) -> Result<JsValue, JsValue> {
+    //     let seeds_vec = js_value_to_seeds_vec(&seeds)?;
+    //     let seeds_slice = seeds_vec
+    //         .iter()
+    //         .map(|seed| seed.as_slice())
+    //         .collect::<Vec<_>>();
+    //
+    //     let (address, bump_seed) = Pubkey::find_program_address(seeds_slice.as_slice(), program_id);
+    //
+    //     let result = Array::new_with_length(2);
+    //     result.set(0, address.into());
+    //     result.set(1, bump_seed.into());
+    //     Ok(result.into())
+    // }
 }

@@ -11,21 +11,25 @@ edition = { workspace = true }
 
 [dependencies]
 bs58 = { workspace = true }
-bv = { workspace = true, features = ["serde"] }
+bv = { workspace = true, features = ["serde"], default-features = false }
 lazy_static = { workspace = true }
-log = { workspace = true, features = ["std"] }
-serde = { workspace = true, features = ["derive", "rc"] }
-serde_bytes = { workspace = true }
-serde_derive = { workspace = true }
+log = { workspace = true, features = [
+#    "std"
+] }
+serde = { workspace = true, features = ["derive", "rc"], default-features = false }
+serde_bytes = { workspace = true, default-features = false }
+serde_derive = { workspace = true, default-features = false }
 sha2 = { workspace = true }
 solana-frozen-abi-macro = { workspace = true }
 thiserror = { workspace = true }
 
 [target.'cfg(not(target_os = "solana"))'.dependencies]
 block-buffer = { workspace = true }
-either = { workspace = true, features = ["use_std"] }
+either = { workspace = true, features = [
+#    "use_std"
+] }
 generic-array = { workspace = true, features = ["serde", "more_lengths"] }
-im = { workspace = true, features = ["rayon", "serde"] }
+im = { workspace = true, default-features = false, features = ["rayon", "serde"] }
 memmap2 = { workspace = true }
 subtle = { workspace = true }
 
@@ -35,3 +39,7 @@ solana-logger = { workspace = true }
 
 [build-dependencies]
 rustc_version = { workspace = true }
+
+[features]
+default = []
+std = []

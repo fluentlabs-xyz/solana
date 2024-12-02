@@ -3,7 +3,7 @@ use {
     lazy_static::lazy_static,
     log::*,
     serde::Serialize,
-    std::any::type_name,
+    core::any::type_name,
 };
 
 // The most important trait for the abi digesting. This trait is used to create any complexities of
@@ -390,7 +390,7 @@ impl<T: AbiExample> AbiExample for std::sync::RwLock<T> {
 use std::collections::{BTreeMap, BTreeSet, HashMap, HashSet, VecDeque};
 
 impl<
-        T: std::cmp::Eq + std::hash::Hash + AbiExample,
+        T: core::cmp::Eq + std::hash::Hash + AbiExample,
         S: AbiExample,
         H: std::hash::BuildHasher + Default,
     > AbiExample for HashMap<T, S, H>
@@ -405,7 +405,7 @@ impl<
 
 #[cfg(not(target_os = "solana"))]
 impl<
-        T: Clone + std::cmp::Eq + std::hash::Hash + AbiExample,
+        T: Clone + core::cmp::Eq + std::hash::Hash + AbiExample,
         S: Clone + AbiExample,
         H: std::hash::BuildHasher + Default,
     > AbiExample for im::HashMap<T, S, H>
@@ -418,7 +418,7 @@ impl<
     }
 }
 
-impl<T: std::cmp::Ord + AbiExample, S: AbiExample> AbiExample for BTreeMap<T, S> {
+impl<T: core::cmp::Ord + AbiExample, S: AbiExample> AbiExample for BTreeMap<T, S> {
     fn example() -> Self {
         info!("AbiExample for (BTreeMap<T, S>): {}", type_name::<Self>());
         let mut map = BTreeMap::default();
@@ -460,7 +460,7 @@ impl<T: AbiExample> AbiExample for VecDeque<T> {
     }
 }
 
-impl<T: std::cmp::Eq + std::hash::Hash + AbiExample, H: std::hash::BuildHasher + Default> AbiExample
+impl<T: core::cmp::Eq + std::hash::Hash + AbiExample, H: std::hash::BuildHasher + Default> AbiExample
     for HashSet<T, H>
 {
     fn example() -> Self {
@@ -471,7 +471,7 @@ impl<T: std::cmp::Eq + std::hash::Hash + AbiExample, H: std::hash::BuildHasher +
     }
 }
 
-impl<T: std::cmp::Ord + AbiExample> AbiExample for BTreeSet<T> {
+impl<T: core::cmp::Ord + AbiExample> AbiExample for BTreeSet<T> {
     fn example() -> Self {
         info!("AbiExample for (BTreeSet<T>): {}", type_name::<Self>());
         let mut set: BTreeSet<T> = BTreeSet::default();

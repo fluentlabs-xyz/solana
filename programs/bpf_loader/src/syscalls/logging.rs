@@ -24,6 +24,7 @@ declare_builtin_function!(
             len,
             invoke_context.get_check_aligned(),
             &mut |string: &str| {
+                println!("Log: {string}");
                 stable_log::program_log(&invoke_context.get_log_collector(), string);
                 Ok(0)
             },

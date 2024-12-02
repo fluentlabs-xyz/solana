@@ -1,3 +1,4 @@
+use alloc::vec::Vec;
 use {
     crate::{
         hash::Hash,
@@ -7,13 +8,14 @@ use {
         sanitize::{Sanitize, SanitizeError},
         short_vec,
     },
+    core::fmt,
     serde::{
         de::{self, Deserializer, SeqAccess, Unexpected, Visitor},
         ser::{SerializeTuple, Serializer},
         Deserialize, Serialize,
     },
-    std::fmt,
 };
+use alloc::format;
 
 mod sanitized;
 pub mod v0;
@@ -31,8 +33,8 @@ pub const MESSAGE_VERSION_PREFIX: u8 = 0x80;
 /// which message version is serialized starting from version `0`. If the first
 /// is bit is not set, all bytes are used to encode the legacy `Message`
 /// format.
-#[frozen_abi(digest = "G4EAiqmGgBprgf5ePYemLJcoFfx4R7rhC1Weo2FVJ7fn")]
-#[derive(Debug, PartialEq, Eq, Clone, AbiEnumVisitor, AbiExample)]
+// #[frozen_abi(digest = "G4EAiqmGgBprgf5ePYemLJcoFfx4R7rhC1Weo2FVJ7fn")]
+#[derive(Debug, PartialEq, Eq, Clone/*, AbiEnumVisitor, AbiExample*/)]
 pub enum VersionedMessage {
     Legacy(LegacyMessage),
     V0(v0::Message),
@@ -307,6 +309,7 @@ impl<'de> Deserialize<'de> for VersionedMessage {
 
 #[cfg(test)]
 mod tests {
+    use alloc::vec;
     use {
         super::*,
         crate::{

@@ -1,6 +1,8 @@
+use alloc::vec::Vec;
 use {
+    alloc::{borrow::Cow, vec},
     serde::{Deserialize, Serialize},
-    solana_frozen_abi_macro::{AbiEnumVisitor, AbiExample},
+    // solana_frozen_abi_macro::{AbiEnumVisitor, AbiExample},
     solana_program::{
         address_lookup_table::error::AddressLookupError,
         clock::Slot,
@@ -8,8 +10,9 @@ use {
         pubkey::Pubkey,
         slot_hashes::{SlotHashes, MAX_ENTRIES},
     },
-    std::borrow::Cow,
 };
+use alloc::format;
+use core::any;
 
 /// The maximum number of addresses that a lookup table can hold
 pub const LOOKUP_TABLE_MAX_ADDRESSES: usize = 256;
@@ -26,7 +29,7 @@ pub enum LookupTableStatus {
 }
 
 /// Address lookup table metadata
-#[derive(Debug, Serialize, Deserialize, PartialEq, Eq, Clone, AbiExample)]
+#[derive(Debug, Serialize, Deserialize, PartialEq, Eq, Clone/*, AbiExample*/)]
 pub struct LookupTableMeta {
     /// Lookup tables cannot be closed until the deactivation slot is
     /// no longer "recent" (not accessible in the `SlotHashes` sysvar).
@@ -103,7 +106,7 @@ impl LookupTableMeta {
 }
 
 /// Program account states
-#[derive(Debug, Serialize, Deserialize, PartialEq, Eq, Clone, AbiExample, AbiEnumVisitor)]
+#[derive(Debug, Serialize, Deserialize, PartialEq, Eq, Clone/*, AbiExample, AbiEnumVisitor*/)]
 #[allow(clippy::large_enum_variant)]
 pub enum ProgramState {
     /// Account is not initialized.
@@ -112,7 +115,7 @@ pub enum ProgramState {
     LookupTable(LookupTableMeta),
 }
 
-#[derive(Debug, PartialEq, Eq, Clone, AbiExample)]
+#[derive(Debug, PartialEq, Eq, Clone/*, AbiExample*/)]
 pub struct AddressLookupTable<'a> {
     pub meta: LookupTableMeta,
     pub addresses: Cow<'a, [Pubkey]>,

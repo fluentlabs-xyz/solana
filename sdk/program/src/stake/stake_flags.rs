@@ -1,10 +1,11 @@
 use borsh::{BorshDeserialize, BorshSchema, BorshSerialize};
+use crate::alloc::string::ToString;
 
 /// Additional flags for stake state.
 #[derive(
     Serialize,
     Deserialize,
-    AbiExample,
+    // AbiExample,
     BorshDeserialize,
     BorshSchema,
     BorshSerialize,

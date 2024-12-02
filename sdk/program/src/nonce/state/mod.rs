@@ -1,11 +1,13 @@
 //! State for durable transaction nonces.
 
 mod current;
+
+use alloc::boxed::Box;
 pub use current::{Data, DurableNonce, State};
 use {
     crate::{hash::Hash, pubkey::Pubkey},
+    hashbrown::HashSet,
     serde_derive::{Deserialize, Serialize},
-    std::collections::HashSet,
 };
 
 #[derive(Debug, Serialize, Deserialize, PartialEq, Eq, Clone)]
@@ -116,7 +118,8 @@ mod tests {
     use {
         super::*,
         crate::{fee_calculator::FeeCalculator, pubkey::Pubkey},
-        std::iter::repeat_with,
+        alloc::boxed::Box,
+        core::iter::repeat_with,
     };
 
     #[test]

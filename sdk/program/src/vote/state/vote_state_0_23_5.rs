@@ -1,4 +1,6 @@
 #![allow(clippy::arithmetic_side_effects)]
+
+use alloc::vec::Vec;
 use super::*;
 
 const MAX_ITEMS: usize = 32;

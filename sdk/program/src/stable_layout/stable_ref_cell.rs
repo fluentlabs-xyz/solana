@@ -2,7 +2,7 @@
 
 #[cfg(test)]
 mod tests {
-    use std::{
+    use core::{
         cell::RefCell,
         mem::{align_of, size_of},
     };

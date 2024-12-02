@@ -4,7 +4,7 @@ use {
         message::{legacy::is_builtin_key_or_sysvar, v0, AccountKeys},
         pubkey::Pubkey,
     },
-    std::{borrow::Cow, collections::HashSet},
+    alloc::{borrow::Cow, vec::Vec},
 };
 
 /// Combination of a version #0 message and its loaded addresses
@@ -82,7 +82,7 @@ impl<'a> LoadedMessage<'a> {
             .enumerate()
             .map(|(i, _key)| self.is_writable_internal(i))
             .collect::<Vec<_>>();
-        let _ = std::mem::replace(
+        let _ = core::mem::replace(
             &mut self.is_writable_account_cache,
             is_writable_account_cache,
         );
@@ -100,7 +100,7 @@ impl<'a> LoadedMessage<'a> {
 
     /// Returns true if any account keys are duplicates
     pub fn has_duplicates(&self) -> bool {
-        let mut uniq = HashSet::new();
+        let mut uniq = hashbrown::HashSet::new();
         self.account_keys().iter().any(|x| !uniq.insert(x))
     }
 
@@ -173,6 +173,7 @@ impl<'a> LoadedMessage<'a> {
 
 #[cfg(test)]
 mod tests {
+    use alloc::vec;
     use {
         super::*,
         crate::{instruction::CompiledInstruction, message::MessageHeader, system_program, sysvar},
@@ -256,7 +257,7 @@ mod tests {
 
     #[test]
     fn test_is_writable() {
-        solana_logger::setup();
+        // solana_logger::setup();
         let create_message_with_keys = |keys: Vec<Pubkey>| {
             LoadedMessage::new(
                 v0::Message {

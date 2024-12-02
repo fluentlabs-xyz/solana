@@ -2,11 +2,14 @@
 //!
 //! This is the loader of the program runtime v2.
 
-use crate::{
-    instruction::{AccountMeta, Instruction},
-    loader_v4_instruction::LoaderV4Instruction,
-    pubkey::Pubkey,
-    system_instruction,
+use {
+    crate::{
+        instruction::{AccountMeta, Instruction},
+        loader_v4_instruction::LoaderV4Instruction,
+        pubkey::Pubkey,
+        system_instruction,
+    },
+    alloc::{vec, vec::Vec},
 };
 
 crate::declare_id!("LoaderV411111111111111111111111111111111111");
@@ -15,7 +18,7 @@ crate::declare_id!("LoaderV411111111111111111111111111111111111");
 pub const DEPLOYMENT_COOLDOWN_IN_SLOTS: u64 = 750;
 
 #[repr(u64)]
-#[derive(Debug, PartialEq, Eq, Clone, Copy, AbiExample)]
+#[derive(Debug, PartialEq, Eq, Clone, Copy/*, AbiExample*/)]
 pub enum LoaderV4Status {
     /// Program is in maintenance
     Retracted,
@@ -27,7 +30,7 @@ pub enum LoaderV4Status {
 
 /// LoaderV4 account states
 #[repr(C)]
-#[derive(Debug, PartialEq, Eq, Clone, Copy, AbiExample)]
+#[derive(Debug, PartialEq, Eq, Clone, Copy/*, AbiExample*/)]
 pub struct LoaderV4State {
     /// Slot in which the program was last deployed, retracted or initialized.
     pub slot: u64,
@@ -42,7 +45,7 @@ pub struct LoaderV4State {
 impl LoaderV4State {
     /// Size of a serialized program account.
     pub const fn program_data_offset() -> usize {
-        std::mem::size_of::<Self>()
+        core::mem::size_of::<Self>()
     }
 }
 

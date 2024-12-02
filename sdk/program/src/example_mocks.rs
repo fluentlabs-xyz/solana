@@ -13,6 +13,8 @@
 #![doc(hidden)]
 #![allow(clippy::new_without_default)]
 
+use alloc::vec;
+
 pub mod solana_rpc_client {
     pub mod rpc_client {
         use {
@@ -23,7 +25,9 @@ pub mod solana_rpc_client {
                     transaction::Transaction,
                 },
             },
-            std::{cell::RefCell, collections::HashMap, rc::Rc},
+            alloc::{rc::Rc, string::String},
+            core::cell::RefCell,
+            hashbrown::HashMap,
         };
 
         #[derive(Default)]
@@ -78,10 +82,10 @@ pub mod solana_rpc_client {
 
 pub mod solana_rpc_client_api {
     pub mod client_error {
-        #[derive(thiserror::Error, Debug)]
-        #[error("mock-error")]
+        #[derive(/*thiserror::Error, */Debug)]
+        // #[error("mock-error")]
         pub struct ClientError;
-        pub type Result<T> = std::result::Result<T, ClientError>;
+        pub type Result<T> = core::result::Result<T, ClientError>;
     }
 }
 
@@ -91,8 +95,8 @@ pub mod solana_rpc_client_nonce_utils {
         crate::nonce::state::{Data, DurableNonce, Versions},
     };
 
-    #[derive(thiserror::Error, Debug)]
-    #[error("mock-error")]
+    #[derive(/*thiserror::Error, */Debug)]
+    // #[error("mock-error")]
     pub struct Error;
 
     pub fn data_from_account<T: ReadableAccount + StateMut<Versions>>(
@@ -123,7 +127,10 @@ pub mod solana_sdk {
     };
 
     pub mod account {
-        use crate::{clock::Epoch, pubkey::Pubkey};
+        use {
+            crate::{clock::Epoch, pubkey::Pubkey},
+            alloc::{vec, vec::Vec},
+        };
         #[derive(Clone)]
         pub struct Account {
             pub lamports: u64,
@@ -188,24 +195,26 @@ pub mod solana_sdk {
     }
 
     pub mod signer {
-        use thiserror::Error;
+        // use thiserror::Error;
 
-        #[derive(Error, Debug)]
-        #[error("mock-error")]
+        #[derive(/*Error, */Debug)]
+        // #[error("mock-error")]
         pub struct SignerError;
     }
 
     pub mod transaction {
         use {
-            super::{signature::Signature, signer::SignerError, signers::Signers},
+            super::{signature::Signature,  signers::Signers},
             crate::{
                 hash::Hash,
                 instruction::Instruction,
                 message::{Message, VersionedMessage},
                 pubkey::Pubkey,
             },
+            alloc::{vec, vec::Vec},
             serde::Serialize,
         };
+        use crate::example_mocks::solana_sdk::signer::SignerError;
 
         pub struct VersionedTransaction {
             pub signatures: Vec<Signature>,
@@ -216,7 +225,7 @@ pub mod solana_sdk {
             pub fn try_new<T: Signers + ?Sized>(
                 message: VersionedMessage,
                 _keypairs: &T,
-            ) -> std::result::Result<Self, SignerError> {
+            ) -> core::result::Result<Self, SignerError> {
                 Ok(VersionedTransaction {
                     signatures: vec![],
                     message,
@@ -289,9 +298,13 @@ pub mod solana_address_lookup_table_program {
     pub use crate::address_lookup_table::program::{check_id, id, ID};
 
     pub mod state {
+        use alloc::vec;
         use {
             crate::{instruction::InstructionError, pubkey::Pubkey},
-            std::borrow::Cow,
+            alloc::{
+                borrow::Cow,
+                vec::Vec,
+            },
         };
 
         pub struct AddressLookupTable<'a> {

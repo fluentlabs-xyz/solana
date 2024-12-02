@@ -2,7 +2,7 @@
 
 #[cfg(test)]
 mod tests {
-    use std::mem::{align_of, size_of};
+    use core::mem::{align_of, size_of};
 
     #[test]
     fn test_memory_layout() {

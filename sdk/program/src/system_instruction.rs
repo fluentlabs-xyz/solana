@@ -38,7 +38,9 @@
 //! [`invoke`]: crate::program::invoke
 //! [`invoke_signed`]: crate::program::invoke_signed
 //! [`AccountInfo`]: crate::account_info::AccountInfo
-
+use alloc::string::String;
+use alloc::vec;
+use alloc::vec::Vec;
 #[allow(deprecated)]
 use {
     crate::{
@@ -50,28 +52,30 @@ use {
         sysvar::{recent_blockhashes, rent},
     },
     num_derive::{FromPrimitive, ToPrimitive},
-    thiserror::Error,
+    // thiserror::Error,
 };
+use crate::alloc::string::ToString;
+use alloc::format;
 
-#[derive(Error, Debug, Serialize, Clone, PartialEq, Eq, FromPrimitive, ToPrimitive)]
+#[derive(/*Error, */Debug, Serialize, Clone, PartialEq, Eq, FromPrimitive, ToPrimitive)]
 pub enum SystemError {
-    #[error("an account with the same address already exists")]
+    // #[error("an account with the same address already exists")]
     AccountAlreadyInUse,
-    #[error("account does not have enough SOL to perform the operation")]
+    // #[error("account does not have enough SOL to perform the operation")]
     ResultWithNegativeLamports,
-    #[error("cannot assign account to this program id")]
+    // #[error("cannot assign account to this program id")]
     InvalidProgramId,
-    #[error("cannot allocate account data of this length")]
+    // #[error("cannot allocate account data of this length")]
     InvalidAccountDataLength,
-    #[error("length of requested seed is too long")]
+    // #[error("length of requested seed is too long")]
     MaxSeedLengthExceeded,
-    #[error("provided address does not match addressed derived from seed")]
+    // #[error("provided address does not match addressed derived from seed")]
     AddressWithSeedMismatch,
-    #[error("advancing stored nonce requires a populated RecentBlockhashes sysvar")]
+    // #[error("advancing stored nonce requires a populated RecentBlockhashes sysvar")]
     NonceNoRecentBlockhashes,
-    #[error("stored nonce is still in recent_blockhashes")]
+    // #[error("stored nonce is still in recent_blockhashes")]
     NonceBlockhashNotExpired,
-    #[error("specified nonce does not match stored nonce")]
+    // #[error("specified nonce does not match stored nonce")]
     NonceUnexpectedBlockhashValue,
 }
 
@@ -101,8 +105,8 @@ static_assertions::const_assert!(MAX_PERMITTED_DATA_LENGTH <= u32::MAX as u64);
 static_assertions::const_assert_eq!(MAX_PERMITTED_DATA_LENGTH, 10_485_760);
 
 /// An instruction to the system program.
-#[frozen_abi(digest = "5e22s2kFu9Do77hdcCyxyhuKHD8ThAB6Q6dNaLTCjL5M")]
-#[derive(Serialize, Deserialize, Debug, Clone, PartialEq, Eq, AbiExample, AbiEnumVisitor)]
+// #[frozen_abi(digest = "5e22s2kFu9Do77hdcCyxyhuKHD8ThAB6Q6dNaLTCjL5M")]
+#[derive(Serialize, Deserialize, Debug, Clone, PartialEq, Eq/*, AbiExample, AbiEnumVisitor*/)]
 pub enum SystemInstruction {
     /// Create a new account
     ///

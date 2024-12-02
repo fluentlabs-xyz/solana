@@ -4,13 +4,16 @@
 //! [`Hash`]: struct@Hash
 
 use {
-    crate::{sanitize::Sanitize, wasm_bindgen},
+    crate::sanitize::Sanitize,
     borsh::{BorshDeserialize, BorshSchema, BorshSerialize},
     bytemuck::{Pod, Zeroable},
+    core::{convert::TryFrom, fmt, mem, str::FromStr},
     sha2::{Digest, Sha256},
-    std::{convert::TryFrom, fmt, mem, str::FromStr},
-    thiserror::Error,
+    // thiserror::Error,
 };
+// #[cfg(feature = "wbg")]
+// use crate::wasm_bindgen;
+use crate::alloc::string::ToString;
 
 /// Size of a hash in bytes.
 pub const HASH_BYTES: usize = 32;
@@ -27,7 +30,8 @@ const MAX_BASE58_LEN: usize = 44;
 /// [blake3]: https://github.com/BLAKE3-team/BLAKE3
 /// [`blake3`]: crate::blake3
 /// [`Message::hash`]: crate::message::Message::hash
-#[wasm_bindgen]
+#[cfg_attr(wbg, feature(wasm_bindgen))]
+// #[wasm_bindgen]
 #[derive(
     Serialize,
     Deserialize,
@@ -42,7 +46,7 @@ const MAX_BASE58_LEN: usize = 44;
     Ord,
     PartialOrd,
     Hash,
-    AbiExample,
+    // AbiExample,
     Pod,
     Zeroable,
 )]
@@ -95,11 +99,11 @@ impl fmt::Display for Hash {
     }
 }
 
-#[derive(Debug, Clone, PartialEq, Eq, Error)]
+#[derive(Debug, Clone, PartialEq, Eq/*, Error*/)]
 pub enum ParseHashError {
-    #[error("string decoded to wrong size for hash")]
+    // #[error("string decoded to wrong size for hash")]
     WrongSize,
-    #[error("failed to decoded string to hash")]
+    // #[error("failed to decoded string to hash")]
     Invalid,
 }
 

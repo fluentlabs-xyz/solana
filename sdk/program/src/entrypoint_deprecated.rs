@@ -12,11 +12,10 @@
 extern crate alloc;
 use {
     crate::{account_info::AccountInfo, program_error::ProgramError, pubkey::Pubkey},
-    alloc::vec::Vec,
-    std::{
+    alloc::{rc::Rc, vec::Vec},
+    core::{
         cell::RefCell,
         mem::size_of,
-        rc::Rc,
         result::Result as ResultGeneric,
         slice::{from_raw_parts, from_raw_parts_mut},
     },
@@ -76,7 +75,7 @@ pub unsafe fn deserialize<'a>(input: *mut u8) -> (&'a Pubkey, Vec<AccountInfo<'a
     for _ in 0..num_accounts {
         let dup_info = *(input.add(offset) as *const u8);
         offset += size_of::<u8>();
-        if dup_info == std::u8::MAX {
+        if dup_info == u8::MAX {
             #[allow(clippy::cast_ptr_alignment)]
             let is_signer = *(input.add(offset) as *const u8) != 0;
             offset += size_of::<u8>();

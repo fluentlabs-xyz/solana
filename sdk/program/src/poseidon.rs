@@ -2,40 +2,40 @@
 //!
 //! [Poseidon]: https://www.poseidon-hash.info/
 
-use thiserror::Error;
+// use thiserror::Error;
 
 /// Length of Poseidon hash result.
 pub const HASH_BYTES: usize = 32;
 
 // PoseidonSyscallError must be removed once the
 // simplify_alt_bn128_syscall_error_codes feature gets activated
-#[derive(Error, Debug)]
+#[derive(/*Error, */Debug)]
 pub enum PoseidonSyscallError {
-    #[error("Invalid parameters.")]
+    // #[error("Invalid parameters.")]
     InvalidParameters,
-    #[error("Invalid endianness.")]
+    // #[error("Invalid endianness.")]
     InvalidEndianness,
-    #[error("Invalid number of inputs. Maximum allowed is 12.")]
+    // #[error("Invalid number of inputs. Maximum allowed is 12.")]
     InvalidNumberOfInputs,
-    #[error("Input is an empty slice.")]
+    // #[error("Input is an empty slice.")]
     EmptyInput,
-    #[error(
-        "Invalid length of the input. The length matching the modulus of the prime field is 32."
-    )]
+    // #[error(
+    //     "Invalid length of the input. The length matching the modulus of the prime field is 32."
+    // )]
     InvalidInputLength,
-    #[error("Failed to convert bytest into a prime field element.")]
+    // #[error("Failed to convert bytest into a prime field element.")]
     BytesToPrimeFieldElement,
-    #[error("Input is larger than the modulus of the prime field.")]
+    // #[error("Input is larger than the modulus of the prime field.")]
     InputLargerThanModulus,
-    #[error("Failed to convert a vector of bytes into an array.")]
+    // #[error("Failed to convert a vector of bytes into an array.")]
     VecToArray,
-    #[error("Failed to convert the number of inputs from u64 to u8.")]
+    // #[error("Failed to convert the number of inputs from u64 to u8.")]
     U64Tou8,
-    #[error("Failed to convert bytes to BigInt")]
+    // #[error("Failed to convert bytes to BigInt")]
     BytesToBigInt,
-    #[error("Invalid width. Choose a width between 2 and 16 for 1 to 15 inputs.")]
+    // #[error("Invalid width. Choose a width between 2 and 16 for 1 to 15 inputs.")]
     InvalidWidthCircom,
-    #[error("Unexpected error")]
+    // #[error("Unexpected error")]
     Unexpected,
 }
 
@@ -314,6 +314,8 @@ pub fn hash(
 
 #[cfg(test)]
 mod tests {
+    use alloc::vec;
+    use alloc::vec::Vec;
     use super::*;
 
     #[test]

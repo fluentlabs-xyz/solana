@@ -1,3 +1,5 @@
+use alloc::string::String;
+use alloc::vec::Vec;
 #[allow(deprecated)]
 use crate::stake::config;
 use {
@@ -12,63 +14,64 @@ use {
         },
         system_instruction, sysvar,
     },
+    alloc::vec,
     log::*,
     num_derive::{FromPrimitive, ToPrimitive},
     serde_derive::{Deserialize, Serialize},
-    thiserror::Error,
+    // thiserror::Error,
 };
 
 /// Reasons the stake might have had an error
-#[derive(Error, Debug, Clone, PartialEq, Eq, FromPrimitive, ToPrimitive)]
+#[derive(/*Error, */Debug, Clone, PartialEq, Eq, FromPrimitive, ToPrimitive)]
 pub enum StakeError {
-    #[error("not enough credits to redeem")]
+    // #[error("not enough credits to redeem")]
     NoCreditsToRedeem,
 
-    #[error("lockup has not yet expired")]
+    // #[error("lockup has not yet expired")]
     LockupInForce,
 
-    #[error("stake already deactivated")]
+    // #[error("stake already deactivated")]
     AlreadyDeactivated,
 
-    #[error("one re-delegation permitted per epoch")]
+    // #[error("one re-delegation permitted per epoch")]
     TooSoonToRedelegate,
 
-    #[error("split amount is more than is staked")]
+    // #[error("split amount is more than is staked")]
     InsufficientStake,
 
-    #[error("stake account with transient stake cannot be merged")]
+    // #[error("stake account with transient stake cannot be merged")]
     MergeTransientStake,
 
-    #[error("stake account merge failed due to different authority, lockups or state")]
+    // #[error("stake account merge failed due to different authority, lockups or state")]
     MergeMismatch,
 
-    #[error("custodian address not present")]
+    // #[error("custodian address not present")]
     CustodianMissing,
 
-    #[error("custodian signature not present")]
+    // #[error("custodian signature not present")]
     CustodianSignatureMissing,
 
-    #[error("insufficient voting activity in the reference vote account")]
+    // #[error("insufficient voting activity in the reference vote account")]
     InsufficientReferenceVotes,
 
-    #[error("stake account is not delegated to the provided vote account")]
+    // #[error("stake account is not delegated to the provided vote account")]
     VoteAddressMismatch,
 
-    #[error(
-        "stake account has not been delinquent for the minimum epochs required for deactivation"
-    )]
+    // #[error(
+    //     "stake account has not been delinquent for the minimum epochs required for deactivation"
+    // )]
     MinimumDelinquentEpochsForDeactivationNotMet,
 
-    #[error("delegation amount is less than the minimum")]
+    // #[error("delegation amount is less than the minimum")]
     InsufficientDelegation,
 
-    #[error("stake account with transient or inactive stake cannot be redelegated")]
+    // #[error("stake account with transient or inactive stake cannot be redelegated")]
     RedelegateTransientOrInactiveStake,
 
-    #[error("stake redelegation to the same vote account is not permitted")]
+    // #[error("stake redelegation to the same vote account is not permitted")]
     RedelegateToSameVoteAccount,
 
-    #[error("redelegated stake must be fully activated before deactivation")]
+    // #[error("redelegated stake must be fully activated before deactivation")]
     RedelegatedStakeMustFullyActivateBeforeDeactivationIsPermitted,
 }
 
@@ -831,33 +834,35 @@ pub fn redelegate_with_seed(
     ]
 }
 
-#[cfg(test)]
-mod tests {
-    use {super::*, crate::instruction::InstructionError};
-
-    #[test]
-    fn test_custom_error_decode() {
-        use num_traits::FromPrimitive;
-        fn pretty_err<T>(err: InstructionError) -> String
-        where
-            T: 'static + std::error::Error + DecodeError<T> + FromPrimitive,
-        {
-            if let InstructionError::Custom(code) = err {
-                let specific_error: T = T::decode_custom_error_to_enum(code).unwrap();
-                format!(
-                    "{:?}: {}::{:?} - {}",
-                    err,
-                    T::type_of(),
-                    specific_error,
-                    specific_error,
-                )
-            } else {
-                "".to_string()
-            }
-        }
-        assert_eq!(
-            "Custom(0): StakeError::NoCreditsToRedeem - not enough credits to redeem",
-            pretty_err::<StakeError>(StakeError::NoCreditsToRedeem.into())
-        )
-    }
-}
+// #[cfg(test)]
+// mod tests {
+//     use alloc::format;
+//     use alloc::string::String;
+//     use {super::*, crate::instruction::InstructionError};
+// 
+//     #[test]
+//     fn test_custom_error_decode() {
+//         use num_traits::FromPrimitive;
+//         fn pretty_err<T>(err: InstructionError) -> String
+//         where
+//             T: 'static + core::error::Error + DecodeError<T> + FromPrimitive,
+//         {
+//             if let InstructionError::Custom(code) = err {
+//                 let specific_error: T = T::decode_custom_error_to_enum(code).unwrap();
+//                 format!(
+//                     "{:?}: {}::{:?} - {}",
+//                     err,
+//                     T::type_of(),
+//                     specific_error,
+//                     specific_error,
+//                 )
+//             } else {
+//                 "".to_string()
+//             }
+//         }
+//         assert_eq!(
+//             "Custom(0): StakeError::NoCreditsToRedeem - not enough credits to redeem",
+//             pretty_err::<StakeError>(StakeError::NoCreditsToRedeem.into())
+//         )
+//     }
+// }

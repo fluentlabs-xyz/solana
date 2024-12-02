@@ -1,3 +1,4 @@
+use alloc::vec::Vec;
 use {
     crate::{
         ed25519_program,
@@ -17,8 +18,9 @@ use {
         solana_program::{system_instruction::SystemInstruction, system_program},
         sysvar::instructions::{BorrowedAccountMeta, BorrowedInstruction},
     },
-    std::{borrow::Cow, convert::TryFrom},
-    thiserror::Error,
+    alloc::borrow::Cow,
+    core::convert::TryFrom,
+    // thiserror::Error,
 };
 
 #[derive(Debug, Clone, Eq, PartialEq)]
@@ -76,16 +78,16 @@ pub enum SanitizedMessage {
     V0(v0::LoadedMessage<'static>),
 }
 
-#[derive(PartialEq, Debug, Error, Eq, Clone)]
+#[derive(PartialEq, Debug, /*Error,*/ Eq, Clone)]
 pub enum SanitizeMessageError {
-    #[error("index out of bounds")]
+    // #[error("index out of bounds")]
     IndexOutOfBounds,
-    #[error("value out of bounds")]
+    // #[error("value out of bounds")]
     ValueOutOfBounds,
-    #[error("invalid value")]
+    // #[error("invalid value")]
     InvalidValue,
-    #[error("{0}")]
-    AddressLoaderError(#[from] AddressLoaderError),
+    // #[error("{0}")]
+    AddressLoaderError(/*#[from] */AddressLoaderError),
 }
 
 impl From<SanitizeError> for SanitizeMessageError {
@@ -120,7 +122,7 @@ impl SanitizedMessage {
             }
             VersionedMessage::V0(message) => {
                 let loaded_addresses =
-                    address_loader.load_addresses(&message.address_table_lookups)?;
+                    address_loader.load_addresses(&message.address_table_lookups).map_err(|e| SanitizeMessageError::AddressLoaderError(e))?;
                 SanitizedMessage::V0(v0::LoadedMessage::new(message, loaded_addresses))
             }
         })
@@ -423,7 +425,7 @@ impl TransactionSignatureDetails {
 
 #[cfg(test)]
 mod tests {
-    use {super::*, crate::message::v0, std::collections::HashSet};
+    use {super::*, crate::message::v0, alloc::vec, hashbrown::HashSet};
 
     #[test]
     fn test_try_from_message() {

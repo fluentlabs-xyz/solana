@@ -5,13 +5,13 @@
 //! The sysvar ID is declared in [`sysvar::stake_history`].
 //!
 //! [`sysvar::stake_history`]: crate::sysvar::stake_history
-
+use alloc::vec::Vec;
 pub use crate::clock::Epoch;
-use std::ops::Deref;
+use core::ops::Deref;
 
 pub const MAX_ENTRIES: usize = 512; // it should never take as many as 512 epochs to warm up or cool down
 
-#[derive(Debug, Serialize, Deserialize, PartialEq, Eq, Default, Clone, AbiExample)]
+#[derive(Debug, Serialize, Deserialize, PartialEq, Eq, Default, Clone/*, AbiExample*/)]
 pub struct StakeHistoryEntry {
     pub effective: u64,    // effective stake at this epoch
     pub activating: u64,   // sum of portion of stakes not fully warmed up
@@ -43,7 +43,7 @@ impl StakeHistoryEntry {
     }
 }
 
-impl std::ops::Add for StakeHistoryEntry {
+impl core::ops::Add for StakeHistoryEntry {
     type Output = StakeHistoryEntry;
     fn add(self, rhs: StakeHistoryEntry) -> Self::Output {
         Self {
@@ -55,7 +55,7 @@ impl std::ops::Add for StakeHistoryEntry {
 }
 
 #[repr(C)]
-#[derive(Debug, Serialize, Deserialize, PartialEq, Eq, Default, Clone, AbiExample)]
+#[derive(Debug, Serialize, Deserialize, PartialEq, Eq, Default, Clone/*, AbiExample*/)]
 pub struct StakeHistory(Vec<(Epoch, StakeHistoryEntry)>);
 
 impl StakeHistory {

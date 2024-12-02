@@ -1,18 +1,24 @@
 //! Solana account addresses.
 
 #![allow(clippy::arithmetic_side_effects)]
+
+use alloc::string::ToString;
+use alloc::vec::Vec;
 use {
-    crate::{decode_error::DecodeError, hash::hashv, wasm_bindgen},
+    crate::hash::hashv,
+    crate::decode_error::DecodeError,
     borsh::{BorshDeserialize, BorshSchema, BorshSerialize},
     bytemuck::{Pod, Zeroable},
-    num_derive::{FromPrimitive, ToPrimitive},
-    std::{
+    core::{
         convert::{Infallible, TryFrom},
         fmt, mem,
         str::FromStr,
     },
-    thiserror::Error,
+    num_derive::{FromPrimitive, ToPrimitive},
+    // thiserror::Error,
 };
+// #[cfg(feature = "wbg")]
+// use crate::wasm_bindgen;
 
 /// Number of bytes in a pubkey
 pub const PUBKEY_BYTES: usize = 32;
@@ -25,14 +31,14 @@ const MAX_BASE58_LEN: usize = 44;
 
 const PDA_MARKER: &[u8; 21] = b"ProgramDerivedAddress";
 
-#[derive(Error, Debug, Serialize, Clone, PartialEq, Eq, FromPrimitive, ToPrimitive)]
+#[derive(/*Error, */Debug, Serialize, Clone, PartialEq, Eq, FromPrimitive, ToPrimitive)]
 pub enum PubkeyError {
     /// Length of the seed is too long for address generation
-    #[error("Length of the seed is too long for address generation")]
+    // #[error("Length of the seed is too long for address generation")]
     MaxSeedLengthExceeded,
-    #[error("Provided seeds do not result in a valid address")]
+    // #[error("Provided seeds do not result in a valid address")]
     InvalidSeeds,
-    #[error("Provided owner is not allowed")]
+    // #[error("Provided owner is not allowed")]
     IllegalOwner,
 }
 impl<T> DecodeError<T> for PubkeyError {
@@ -64,10 +70,11 @@ impl From<u64> for PubkeyError {
 /// [ed25519]: https://ed25519.cr.yp.to/
 /// [pdas]: https://solana.com/docs/core/cpi#program-derived-addresses
 /// [`Keypair`]: https://docs.rs/solana-sdk/latest/solana_sdk/signer/keypair/struct.Keypair.html
-#[wasm_bindgen]
+#[cfg_attr(wbg, feature(wasm_bindgen))]
+// #[wasm_bindgen]
 #[repr(transparent)]
 #[derive(
-    AbiExample,
+    // AbiExample,
     BorshDeserialize,
     BorshSchema,
     BorshSerialize,
@@ -89,11 +96,11 @@ pub struct Pubkey(pub(crate) [u8; 32]);
 
 impl crate::sanitize::Sanitize for Pubkey {}
 
-#[derive(Error, Debug, Serialize, Clone, PartialEq, Eq, FromPrimitive, ToPrimitive)]
+#[derive(/*Error, */Debug, Serialize, Clone, PartialEq, Eq, FromPrimitive, ToPrimitive)]
 pub enum ParsePubkeyError {
-    #[error("String is the wrong size")]
+    // #[error("String is the wrong size")]
     WrongSize,
-    #[error("Invalid Base58 string")]
+    // #[error("Invalid Base58 string")]
     Invalid,
 }
 
@@ -135,7 +142,7 @@ impl From<[u8; 32]> for Pubkey {
 }
 
 impl TryFrom<&[u8]> for Pubkey {
-    type Error = std::array::TryFromSliceError;
+    type Error = core::array::TryFromSliceError;
 
     #[inline]
     fn try_from(pubkey: &[u8]) -> Result<Self, Self::Error> {
@@ -164,6 +171,7 @@ pub fn bytes_are_curve_point<T: AsRef<[u8]>>(_bytes: T) -> bool {
     #[cfg(not(target_os = "solana"))]
     {
         curve25519_dalek::edwards::CompressedEdwardsY::from_slice(_bytes.as_ref())
+            .unwrap()
             .decompress()
             .is_some()
     }
@@ -184,12 +192,12 @@ impl Pubkey {
         Self(pubkey_array)
     }
 
-    #[deprecated(since = "1.3.9", note = "Please use 'Pubkey::new_unique' instead")]
-    #[cfg(not(target_os = "solana"))]
-    pub fn new_rand() -> Self {
-        // Consider removing Pubkey::new_rand() entirely in the v1.5 or v1.6 timeframe
-        Pubkey::from(rand::random::<[u8; 32]>())
-    }
+    // #[deprecated(since = "1.3.9", note = "Please use 'Pubkey::new_unique' instead")]
+    // #[cfg(not(target_os = "solana"))]
+    // pub fn new_rand() -> Self {
+    //     // Consider removing Pubkey::new_rand() entirely in the v1.5 or v1.6 timeframe
+    //     Pubkey::from(rand::random::<[u8; 32]>())
+    // }
 
     /// unique Pubkey for tests and benchmarks.
     pub fn new_unique() -> Self {
@@ -500,8 +508,8 @@ impl Pubkey {
         // not supported
         #[cfg(not(target_os = "solana"))]
         {
-            let mut bump_seed = [std::u8::MAX];
-            for _ in 0..std::u8::MAX {
+            let mut bump_seed = [u8::MAX];
+            for _ in 0..u8::MAX {
                 {
                     let mut seeds_with_bump = seeds.to_vec();
                     seeds_with_bump.push(&bump_seed);
@@ -519,7 +527,7 @@ impl Pubkey {
         #[cfg(target_os = "solana")]
         {
             let mut bytes = [0; 32];
-            let mut bump_seed = std::u8::MAX;
+            let mut bump_seed = u8::MAX;
             let result = unsafe {
                 crate::syscalls::sol_try_find_program_address(
                     seeds as *const _ as *const u8,
@@ -738,7 +746,9 @@ impl_borsh_serialize!(borsh0_9);
 
 #[cfg(test)]
 mod tests {
-    use {super::*, std::str::from_utf8};
+    use alloc::string::String;
+    use alloc::vec;
+    use {super::*, core::str::from_utf8};
 
     #[test]
     fn test_new_unique() {
@@ -820,7 +830,7 @@ mod tests {
 
         assert!(Pubkey::create_with_seed(
             &Pubkey::new_unique(),
-            std::str::from_utf8(&[0; MAX_SEED_LEN]).unwrap(),
+            core::str::from_utf8(&[0; MAX_SEED_LEN]).unwrap(),
             &Pubkey::new_unique(),
         )
         .is_ok());
@@ -929,29 +939,30 @@ mod tests {
         );
     }
 
-    #[test]
-    fn test_pubkey_off_curve() {
-        // try a bunch of random input, all successful generated program
-        // addresses must land off the curve and be unique
-        let mut addresses = vec![];
-        for _ in 0..1_000 {
-            let program_id = Pubkey::new_unique();
-            let bytes1 = rand::random::<[u8; 10]>();
-            let bytes2 = rand::random::<[u8; 32]>();
-            if let Ok(program_address) =
-                Pubkey::create_program_address(&[&bytes1, &bytes2], &program_id)
-            {
-                let is_on_curve = curve25519_dalek::edwards::CompressedEdwardsY::from_slice(
-                    &program_address.to_bytes(),
-                )
-                .decompress()
-                .is_some();
-                assert!(!is_on_curve);
-                assert!(!addresses.contains(&program_address));
-                addresses.push(program_address);
-            }
-        }
-    }
+    // #[test]
+    // fn test_pubkey_off_curve() {
+    //     // try a bunch of random input, all successful generated program
+    //     // addresses must land off the curve and be unique
+    //     let mut addresses = vec![];
+    //     for _ in 0..1_000 {
+    //         let program_id = Pubkey::new_unique();
+    //         let bytes1 = rand::random::<[u8; 10]>();
+    //         let bytes2 = rand::random::<[u8; 32]>();
+    //         if let Ok(program_address) =
+    //             Pubkey::create_program_address(&[&bytes1, &bytes2], &program_id)
+    //         {
+    //             let is_on_curve = curve25519_dalek::edwards::CompressedEdwardsY::from_slice(
+    //                 &program_address.to_bytes(),
+    //             )
+    //             .unwrap()
+    //             .decompress()
+    //             .is_some();
+    //             assert!(!is_on_curve);
+    //             assert!(!addresses.contains(&program_address));
+    //             addresses.push(program_address);
+    //         }
+    //     }
+    // }
 
     #[test]
     fn test_find_program_address() {

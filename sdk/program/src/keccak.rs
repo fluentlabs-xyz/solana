@@ -5,10 +5,11 @@
 use {
     crate::sanitize::Sanitize,
     borsh::{BorshDeserialize, BorshSchema, BorshSerialize},
+    core::{convert::TryFrom, fmt, mem, str::FromStr},
     sha3::{Digest, Keccak256},
-    std::{convert::TryFrom, fmt, mem, str::FromStr},
-    thiserror::Error,
+    // thiserror::Error,
 };
+use crate::alloc::string::ToString;
 
 pub const HASH_BYTES: usize = 32;
 /// Maximum string length of a base58 encoded hash
@@ -27,7 +28,7 @@ const MAX_BASE58_LEN: usize = 44;
     Ord,
     PartialOrd,
     Hash,
-    AbiExample,
+    // AbiExample,
 )]
 #[borsh(crate = "borsh")]
 #[repr(transparent)]
@@ -74,11 +75,11 @@ impl fmt::Display for Hash {
     }
 }
 
-#[derive(Debug, Clone, PartialEq, Eq, Error)]
+#[derive(Debug, Clone, PartialEq, Eq/*, Error*/)]
 pub enum ParseHashError {
-    #[error("string decoded to wrong size for hash")]
+    // #[error("string decoded to wrong size for hash")]
     WrongSize,
-    #[error("failed to decoded string to hash")]
+    // #[error("failed to decoded string to hash")]
     Invalid,
 }
 

@@ -4,7 +4,7 @@
 //! This implementation mostly matches `std::option` except iterators since the iteration
 //! trait requires returning `std::option::Option`
 
-use std::{
+use core::{
     convert, mem,
     ops::{Deref, DerefMut},
 };

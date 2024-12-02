@@ -3,10 +3,13 @@
 #![allow(non_snake_case)]
 use {
     crate::{instruction::Instruction, pubkey::Pubkey, system_instruction::*},
-    wasm_bindgen::prelude::*,
 };
+#[cfg(feature = "wbg")]
+use wasm_bindgen::prelude::*;
+use alloc::string::String;
 
-#[wasm_bindgen]
+#[cfg_attr(wbg, feature(wasm_bindgen))]
+// #[wasm_bindgen]
 impl SystemInstruction {
     pub fn createAccount(
         from_pubkey: &Pubkey,
@@ -79,15 +82,16 @@ impl SystemInstruction {
         allocate_with_seed(address, base, seed, space, owner)
     }
 
-    pub fn createNonceAccount(
-        from_pubkey: &Pubkey,
-        nonce_pubkey: &Pubkey,
-        authority: &Pubkey,
-        lamports: u64,
-    ) -> js_sys::Array {
-        let instructions = create_nonce_account(from_pubkey, nonce_pubkey, authority, lamports);
-        instructions.into_iter().map(JsValue::from).collect()
-    }
+    // #[cfg(feature = "wbg")]
+    // pub fn createNonceAccount(
+    //     from_pubkey: &Pubkey,
+    //     nonce_pubkey: &Pubkey,
+    //     authority: &Pubkey,
+    //     lamports: u64,
+    // ) -> js_sys::Array {
+    //     let instructions = create_nonce_account(from_pubkey, nonce_pubkey, authority, lamports);
+    //     instructions.into_iter().map(JsValue::from).collect()
+    // }
 
     pub fn advanceNonceAccount(nonce_pubkey: &Pubkey, authorized_pubkey: &Pubkey) -> Instruction {
         advance_nonce_account(nonce_pubkey, authorized_pubkey)

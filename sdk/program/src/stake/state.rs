@@ -3,6 +3,7 @@
 // warnings from uses of deprecated types during trait derivations.
 #![allow(deprecated)]
 
+use hashbrown::HashSet;
 use {
     crate::{
         clock::{Clock, Epoch, UnixTimestamp},
@@ -14,9 +15,12 @@ use {
         },
         stake_history::{StakeHistory, StakeHistoryEntry},
     },
-    borsh::{io, BorshDeserialize, BorshSchema, BorshSerialize},
-    std::collections::HashSet,
+    borsh::{BorshDeserialize, BorshSchema, BorshSerialize},
 };
+use borsh::io as BorshIo;
+use borsh0_10::maybestd::io as BorshIo10Maybestd;
+use borsh0_9::maybestd::io as Borsh9MaybestdIo;
+use crate::alloc::string::ToString;
 
 pub type StakeActivationStatus = StakeHistoryEntry;
 
@@ -24,7 +28,7 @@ pub type StakeActivationStatus = StakeHistoryEntry;
 // epoch
 pub const DEFAULT_WARMUP_COOLDOWN_RATE: f64 = 0.25;
 pub const NEW_WARMUP_COOLDOWN_RATE: f64 = 0.09;
-pub const DEFAULT_SLASH_PENALTY: u8 = ((5 * std::u8::MAX as usize) / 100) as u8;
+pub const DEFAULT_SLASH_PENALTY: u8 = ((5 * u8::MAX as usize) / 100) as u8;
 
 pub fn warmup_cooldown_rate(current_epoch: Epoch, new_rate_activation_epoch: Option<Epoch>) -> f64 {
     if current_epoch < new_rate_activation_epoch.unwrap_or(u64::MAX) {
@@ -35,9 +39,9 @@ pub fn warmup_cooldown_rate(current_epoch: Epoch, new_rate_activation_epoch: Opt
 }
 
 macro_rules! impl_borsh_stake_state {
-    ($borsh:ident) => {
+    ($borsh:ident, $namespace:ident) => {
         impl $borsh::BorshDeserialize for StakeState {
-            fn deserialize_reader<R: io::Read>(reader: &mut R) -> io::Result<Self> {
+            fn deserialize_reader<R: $namespace::Read>(reader: &mut R) -> $namespace::Result<Self> {
                 let enum_value: u32 = $borsh::BorshDeserialize::deserialize_reader(reader)?;
                 match enum_value {
                     0 => Ok(StakeState::Uninitialized),
@@ -51,15 +55,15 @@ macro_rules! impl_borsh_stake_state {
                         Ok(StakeState::Stake(meta, stake))
                     }
                     3 => Ok(StakeState::RewardsPool),
-                    _ => Err(io::Error::new(
-                        io::ErrorKind::InvalidData,
+                    _ => Err($namespace::Error::new(
+                        $namespace::ErrorKind::InvalidData,
                         "Invalid enum value",
                     )),
                 }
             }
         }
         impl $borsh::BorshSerialize for StakeState {
-            fn serialize<W: io::Write>(&self, writer: &mut W) -> io::Result<()> {
+            fn serialize<W: $namespace::Write>(&self, writer: &mut W) -> $namespace::Result<()> {
                 match self {
                     StakeState::Uninitialized => writer.write_all(&0u32.to_le_bytes()),
                     StakeState::Initialized(meta) => {
@@ -77,7 +81,7 @@ macro_rules! impl_borsh_stake_state {
         }
     };
 }
-#[derive(Debug, Default, Serialize, Deserialize, PartialEq, Clone, Copy, AbiExample)]
+#[derive(Debug, Default, Serialize, Deserialize, PartialEq, Clone, Copy/*, AbiExample*/)]
 #[allow(clippy::large_enum_variant)]
 #[deprecated(
     since = "1.17.0",
@@ -90,8 +94,8 @@ pub enum StakeState {
     Stake(Meta, Stake),
     RewardsPool,
 }
-impl_borsh_stake_state!(borsh);
-impl_borsh_stake_state!(borsh0_10);
+impl_borsh_stake_state!(borsh, BorshIo);
+impl_borsh_stake_state!(borsh0_10, BorshIo10Maybestd);
 impl StakeState {
     /// The fixed number of bytes used to serialize each stake account
     pub const fn size_of() -> usize {
@@ -133,7 +137,7 @@ impl StakeState {
     }
 }
 
-#[derive(Debug, Default, Serialize, Deserialize, PartialEq, Clone, Copy, AbiExample)]
+#[derive(Debug, Default, Serialize, Deserialize, PartialEq, Clone, Copy/*, AbiExample*/)]
 #[allow(clippy::large_enum_variant)]
 pub enum StakeStateV2 {
     #[default]
@@ -143,9 +147,9 @@ pub enum StakeStateV2 {
     RewardsPool,
 }
 macro_rules! impl_borsh_stake_state_v2 {
-    ($borsh:ident) => {
+    ($borsh:ident, $namespace:ident) => {
         impl $borsh::BorshDeserialize for StakeStateV2 {
-            fn deserialize_reader<R: io::Read>(reader: &mut R) -> io::Result<Self> {
+            fn deserialize_reader<R: $namespace::Read>(reader: &mut R) -> $namespace::Result<Self> {
                 let enum_value: u32 = $borsh::BorshDeserialize::deserialize_reader(reader)?;
                 match enum_value {
                     0 => Ok(StakeStateV2::Uninitialized),
@@ -161,15 +165,15 @@ macro_rules! impl_borsh_stake_state_v2 {
                         Ok(StakeStateV2::Stake(meta, stake, stake_flags))
                     }
                     3 => Ok(StakeStateV2::RewardsPool),
-                    _ => Err(io::Error::new(
-                        io::ErrorKind::InvalidData,
+                    _ => Err($namespace::Error::new(
+                        $namespace::ErrorKind::InvalidData,
                         "Invalid enum value",
                     )),
                 }
             }
         }
         impl $borsh::BorshSerialize for StakeStateV2 {
-            fn serialize<W: io::Write>(&self, writer: &mut W) -> io::Result<()> {
+            fn serialize<W: $namespace::Write>(&self, writer: &mut W) -> $namespace::Result<()> {
                 match self {
                     StakeStateV2::Uninitialized => writer.write_all(&0u32.to_le_bytes()),
                     StakeStateV2::Initialized(meta) => {
@@ -188,8 +192,8 @@ macro_rules! impl_borsh_stake_state_v2 {
         }
     };
 }
-impl_borsh_stake_state_v2!(borsh);
-impl_borsh_stake_state_v2!(borsh0_10);
+impl_borsh_stake_state_v2!(borsh, BorshIo);
+impl_borsh_stake_state_v2!(borsh0_10, BorshIo10Maybestd);
 
 impl StakeStateV2 {
     /// The fixed number of bytes used to serialize each stake account
@@ -232,7 +236,7 @@ impl StakeStateV2 {
     }
 }
 
-#[derive(Debug, Serialize, Deserialize, PartialEq, Eq, Clone, Copy, AbiExample)]
+#[derive(Debug, Serialize, Deserialize, PartialEq, Eq, Clone, Copy/*, AbiExample*/)]
 pub enum StakeAuthorize {
     Staker,
     Withdrawer,
@@ -247,7 +251,7 @@ pub enum StakeAuthorize {
     Eq,
     Clone,
     Copy,
-    AbiExample,
+    // AbiExample,
     BorshDeserialize,
     BorshSchema,
     BorshSerialize,
@@ -341,7 +345,7 @@ impl borsh0_10::ser::BorshSerialize for Lockup {
     Eq,
     Clone,
     Copy,
-    AbiExample,
+    // AbiExample,
     BorshDeserialize,
     BorshSchema,
     BorshSerialize,
@@ -474,7 +478,7 @@ impl borsh0_10::ser::BorshSerialize for Authorized {
     Eq,
     Clone,
     Copy,
-    AbiExample,
+    // AbiExample,
     BorshDeserialize,
     BorshSchema,
     BorshSerialize,
@@ -589,7 +593,7 @@ impl borsh0_10::ser::BorshSerialize for Meta {
     PartialEq,
     Clone,
     Copy,
-    AbiExample,
+    // AbiExample,
     BorshDeserialize,
     BorshSchema,
     BorshSerialize,
@@ -619,7 +623,7 @@ impl Default for Delegation {
             voter_pubkey: Pubkey::default(),
             stake: 0,
             activation_epoch: 0,
-            deactivation_epoch: std::u64::MAX,
+            deactivation_epoch: u64::MAX,
             warmup_cooldown_rate: DEFAULT_WARMUP_COOLDOWN_RATE,
         }
     }
@@ -635,7 +639,7 @@ impl Delegation {
         }
     }
     pub fn is_bootstrap(&self) -> bool {
-        self.activation_epoch == std::u64::MAX
+        self.activation_epoch == u64::MAX
     }
 
     pub fn stake(
@@ -904,7 +908,7 @@ impl borsh0_10::ser::BorshSerialize for Delegation {
     PartialEq,
     Clone,
     Copy,
-    AbiExample,
+    // AbiExample,
     BorshDeserialize,
     BorshSchema,
     BorshSerialize,
@@ -947,7 +951,7 @@ impl Stake {
     }
 
     pub fn deactivate(&mut self, epoch: Epoch) -> Result<(), StakeError> {
-        if self.delegation.deactivation_epoch != std::u64::MAX {
+        if self.delegation.deactivation_epoch != u64::MAX {
             Err(StakeError::AlreadyDeactivated)
         } else {
             self.delegation.deactivation_epoch = epoch;
@@ -1029,7 +1033,7 @@ mod test {
 
     #[test]
     fn test_size_of() {
-        assert_eq!(StakeStateV2::size_of(), std::mem::size_of::<StakeStateV2>());
+        assert_eq!(StakeStateV2::size_of(), core::mem::size_of::<StakeStateV2>());
     }
 
     #[test]
@@ -1182,7 +1186,7 @@ mod test {
 
         #[test]
         fn test_size_of() {
-            assert_eq!(StakeState::size_of(), std::mem::size_of::<StakeState>());
+            assert_eq!(StakeState::size_of(), core::mem::size_of::<StakeState>());
         }
 
         #[test]

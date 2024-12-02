@@ -1,12 +1,9 @@
 //! `Instruction`, with a stable memory layout
 
-use {
-    crate::{
-        instruction::{AccountMeta, Instruction},
-        pubkey::Pubkey,
-        stable_layout::stable_vec::StableVec,
-    },
-    std::fmt::Debug,
+use crate::{
+    instruction::{AccountMeta, Instruction},
+    pubkey::Pubkey,
+    stable_layout::stable_vec::StableVec,
 };
 
 /// `Instruction`, with a stable memory layout
@@ -50,8 +47,9 @@ impl From<Instruction> for StableInstruction {
 mod tests {
     use {
         super::*,
+        alloc::vec,
+        core::mem::{align_of, size_of},
         memoffset::offset_of,
-        std::mem::{align_of, size_of},
     };
 
     #[test]

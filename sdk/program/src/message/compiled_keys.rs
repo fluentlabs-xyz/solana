@@ -1,3 +1,4 @@
+use alloc::vec::Vec;
 #[cfg(not(target_os = "solana"))]
 use crate::{
     address_lookup_table_account::AddressLookupTableAccount,
@@ -5,8 +6,8 @@ use crate::{
 };
 use {
     crate::{instruction::Instruction, message::MessageHeader, pubkey::Pubkey},
-    std::collections::BTreeMap,
-    thiserror::Error,
+    alloc::collections::BTreeMap,
+    // thiserror::Error,
 };
 
 /// A helper struct to collect pubkeys compiled for a set of instructions
@@ -17,13 +18,13 @@ pub(crate) struct CompiledKeys {
 }
 
 #[cfg_attr(target_os = "solana", allow(dead_code))]
-#[derive(PartialEq, Debug, Error, Eq, Clone)]
+#[derive(PartialEq, Debug, /*Error,*/ Eq, Clone)]
 pub enum CompileError {
-    #[error("account index overflowed during compilation")]
+    // #[error("account index overflowed during compilation")]
     AccountIndexOverflow,
-    #[error("address lookup table index overflowed during compilation")]
+    // #[error("address lookup table index overflowed during compilation")]
     AddressTableLookupIndexOverflow,
-    #[error("encountered unknown account key `{0}` during instruction compilation")]
+    // #[error("encountered unknown account key `{0}` during instruction compilation")]
     UnknownInstructionKey(Pubkey),
 }
 
@@ -106,7 +107,7 @@ impl CompiledKeys {
             num_readonly_unsigned_accounts: try_into_u8(readonly_non_signer_keys.len())?,
         };
 
-        let static_account_keys = std::iter::empty()
+        let static_account_keys = core::iter::empty()
             .chain(writable_signer_keys)
             .chain(readonly_signer_keys)
             .chain(writable_non_signer_keys)
@@ -184,6 +185,7 @@ impl CompiledKeys {
 
 #[cfg(test)]
 mod tests {
+    use alloc::vec;
     use {super::*, crate::instruction::AccountMeta, bitflags::bitflags};
 
     bitflags! {

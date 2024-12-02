@@ -10,7 +10,7 @@ license = { workspace = true }
 edition = { workspace = true }
 
 [dependencies]
-bv = { workspace = true, features = ["serde"] }
+bv = { workspace = true, features = ["serde"], default-features = false }
 fnv = { workspace = true }
 log = { workspace = true }
 rand = { workspace = true }

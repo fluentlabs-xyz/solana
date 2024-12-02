@@ -83,6 +83,7 @@
 
 use {
     crate::{account_info::AccountInfo, program_error::ProgramError, pubkey::Pubkey},
+    alloc::{vec, vec::Vec},
     lazy_static::lazy_static,
 };
 
@@ -240,10 +241,11 @@ macro_rules! impl_sysvar_get {
 
 #[cfg(test)]
 mod tests {
+    use alloc::rc::Rc;
     use {
         super::*,
         crate::{clock::Epoch, program_error::ProgramError, pubkey::Pubkey},
-        std::{cell::RefCell, rc::Rc},
+        core::{cell::RefCell},
     };
 
     #[repr(C)]

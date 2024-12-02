@@ -2,9 +2,9 @@
 
 #[cfg(test)]
 mod tests {
-    use std::{
-        mem::{align_of, size_of},
-        rc::Rc,
+    use {
+        alloc::rc::Rc,
+        core::mem::{align_of, size_of},
     };
 
     #[test]

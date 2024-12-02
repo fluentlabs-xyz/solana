@@ -29,6 +29,7 @@
 
 #![allow(clippy::arithmetic_side_effects)]
 
+use alloc::vec::Vec;
 use crate::{
     account_info::AccountInfo,
     instruction::{AccountMeta, Instruction},
@@ -295,6 +296,7 @@ pub fn get_instruction_relative(
 
 #[cfg(test)]
 mod tests {
+    use alloc::vec;
     use {
         super::*,
         crate::{
@@ -302,7 +304,7 @@ mod tests {
             message::{Message as LegacyMessage, SanitizedMessage},
             pubkey::Pubkey,
         },
-        std::convert::TryFrom,
+        core::convert::TryFrom,
     };
 
     #[test]

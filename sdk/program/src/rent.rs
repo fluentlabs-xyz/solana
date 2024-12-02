@@ -4,11 +4,11 @@
 
 #![allow(clippy::arithmetic_side_effects)]
 
-use {crate::clock::DEFAULT_SLOTS_PER_EPOCH, solana_sdk_macro::CloneZeroed};
+use {crate::clock::DEFAULT_SLOTS_PER_EPOCH /*, solana_sdk_macro::CloneZeroed*/};
 
 /// Configuration of network rent.
 #[repr(C)]
-#[derive(Serialize, Deserialize, PartialEq, CloneZeroed, Copy, Debug, AbiExample)]
+#[derive(Serialize, Deserialize, PartialEq, /*CloneZeroed, */ Copy, Clone, Debug/*, AbiExample*/)]
 pub struct Rent {
     /// Rental rate in lamports/byte-year.
     pub lamports_per_byte_year: u64,

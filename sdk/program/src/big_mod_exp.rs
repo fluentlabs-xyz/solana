@@ -1,3 +1,5 @@
+use alloc::{vec, vec::Vec};
+
 #[repr(C)]
 pub struct BigModExpParams {
     pub base: *const u8,
@@ -58,6 +60,7 @@ pub fn big_mod_exp(base: &[u8], exponent: &[u8], modulus: &[u8]) -> Vec<u8> {
 
 #[cfg(test)]
 mod tests {
+    use alloc::string::String;
     use super::*;
 
     #[test]

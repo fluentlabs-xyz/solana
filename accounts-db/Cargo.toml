@@ -13,7 +13,7 @@ edition = { workspace = true }
 arrayref = { workspace = true }
 bincode = { workspace = true }
 blake3 = { workspace = true }
-bv = { workspace = true, features = ["serde"] }
+bv = { workspace = true, features = ["serde"], default-features = false }
 bytemuck = { workspace = true }
 byteorder = { workspace = true }
 bzip2 = { workspace = true }

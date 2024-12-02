@@ -148,7 +148,7 @@ fn derive_abi_sample_enum_type(input: ItemEnum) -> TokenStream {
             fn example() -> Self {
                 ::log::info!(
                     "AbiExample for enum: {}",
-                    std::any::type_name::<#type_name #ty_generics>()
+                    core::any::type_name::<#type_name #ty_generics>()
                 );
                 #sample_variant
             }
@@ -200,7 +200,7 @@ fn derive_abi_sample_struct_type(input: ItemStruct) -> TokenStream {
             fn example() -> Self {
                 ::log::info!(
                     "AbiExample for struct: {}",
-                    std::any::type_name::<#type_name #ty_generics>()
+                    core::any::type_name::<#type_name #ty_generics>()
                 );
                 use ::solana_frozen_abi::abi_example::AbiExample;
 

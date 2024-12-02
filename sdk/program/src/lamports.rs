@@ -1,15 +1,15 @@
 //! Defines the [`LamportsError`] type.
 
-use {crate::instruction::InstructionError, thiserror::Error};
+use {crate::instruction::InstructionError/*, thiserror::Error*/};
 
-#[derive(Debug, Error)]
+#[derive(Debug/*, Error*/)]
 pub enum LamportsError {
     /// arithmetic underflowed
-    #[error("Arithmetic underflowed")]
+    // #[error("Arithmetic underflowed")]
     ArithmeticUnderflow,
 
     /// arithmetic overflowed
-    #[error("Arithmetic overflowed")]
+    // #[error("Arithmetic overflowed")]
     ArithmeticOverflow,
 }
 

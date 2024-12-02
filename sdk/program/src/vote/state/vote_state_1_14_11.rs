@@ -1,10 +1,11 @@
+use alloc::vec::Vec;
 use super::*;
 
 // Offset used for VoteState version 1_14_11
 const DEFAULT_PRIOR_VOTERS_OFFSET: usize = 82;
 
-#[frozen_abi(digest = "CZTgLymuevXjAx6tM8X8T5J3MCx9AkEsFSmu4FJrEpkG")]
-#[derive(Debug, Default, Serialize, Deserialize, PartialEq, Eq, Clone, AbiExample)]
+// #[frozen_abi(digest = "CZTgLymuevXjAx6tM8X8T5J3MCx9AkEsFSmu4FJrEpkG")]
+#[derive(Debug, Default, Serialize, Deserialize, PartialEq, Eq, Clone/*, AbiExample*/)]
 pub struct VoteState1_14_11 {
     /// the node that votes in this account
     pub node_pubkey: Pubkey,

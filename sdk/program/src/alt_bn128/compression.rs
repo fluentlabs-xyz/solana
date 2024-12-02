@@ -4,7 +4,7 @@ pub mod prelude {
     };
 }
 
-use thiserror::Error;
+// use thiserror::Error;
 
 mod consts {
     pub const ALT_BN128_G1_COMPRESS: u64 = 0;
@@ -22,19 +22,19 @@ mod alt_bn128_compression_size {
 
 // AltBn128CompressionError must be removed once the
 // simplify_alt_bn128_syscall_error_codes feature gets activated
-#[derive(Debug, Error, Clone, PartialEq, Eq)]
+#[derive(Debug, /*Error,*/ Clone, PartialEq, Eq)]
 pub enum AltBn128CompressionError {
-    #[error("Unexpected error")]
+    // #[error("Unexpected error")]
     UnexpectedError,
-    #[error("Failed to decompress g1")]
+    // #[error("Failed to decompress g1")]
     G1DecompressionFailed,
-    #[error("Failed to decompress g2")]
+    // #[error("Failed to decompress g2")]
     G2DecompressionFailed,
-    #[error("Failed to compress affine g1")]
+    // #[error("Failed to compress affine g1")]
     G1CompressionFailed,
-    #[error("Failed to compress affine g2")]
+    // #[error("Failed to compress affine g2")]
     G2CompressionFailed,
-    #[error("Invalid input size")]
+    // #[error("Invalid input size")]
     InvalidInputSize,
 }
 
@@ -273,11 +273,14 @@ mod target_arch {
 
 #[cfg(test)]
 mod tests {
+    use alloc::string::String;
+    use alloc::vec;
+    use alloc::vec::Vec;
     use {
         super::*,
         crate::alt_bn128::compression::target_arch::convert_endianness,
         ark_serialize::{CanonicalDeserialize, CanonicalSerialize, Compress, Validate},
-        std::ops::Neg,
+        core::ops::Neg,
         target_arch::{
             alt_bn128_g1_compress, alt_bn128_g1_decompress, alt_bn128_g2_compress,
             alt_bn128_g2_decompress,

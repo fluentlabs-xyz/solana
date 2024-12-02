@@ -12,18 +12,27 @@
 #![allow(clippy::arithmetic_side_effects)]
 
 use {
-    crate::{
-        bpf_loader, bpf_loader_deprecated, bpf_loader_upgradeable,
-        hash::Hash,
-        instruction::{CompiledInstruction, Instruction},
-        message::{compiled_keys::CompiledKeys, MessageHeader},
-        pubkey::Pubkey,
-        sanitize::{Sanitize, SanitizeError},
-        short_vec, system_instruction, system_program, sysvar, wasm_bindgen,
-    },
+    crate::sysvar,
+    crate::system_program,
+    crate::system_instruction,
+    crate::short_vec,
+    crate::sanitize::Sanitize,
+    crate::sanitize::SanitizeError,
+    crate::pubkey::Pubkey,
+    crate::message::compiled_keys::CompiledKeys,
+    crate::message::MessageHeader,
+    crate::instruction::CompiledInstruction,
+    crate::instruction::Instruction,
+    crate::hash::Hash,
+    crate::bpf_loader_upgradeable,
+    crate::bpf_loader_deprecated,
+    crate::bpf_loader,
+    alloc::{vec, vec::Vec},
+    core::{convert::TryFrom, str::FromStr},
     lazy_static::lazy_static,
-    std::{convert::TryFrom, str::FromStr},
 };
+// #[cfg(feature = "wbg")]
+// use crate::wasm_bindgen;
 
 lazy_static! {
     // This will be deprecated and so this list shouldn't be modified
@@ -103,18 +112,21 @@ fn compile_instructions(ixs: &[Instruction], keys: &[Pubkey]) -> Vec<CompiledIns
 /// redundantly specifying the fee-payer is not strictly required.
 // NOTE: Serialization-related changes must be paired with the custom serialization
 // for versioned messages in the `RemainingLegacyMessage` struct.
-#[wasm_bindgen]
-#[frozen_abi(digest = "2KnLEqfLcTBQqitE22Pp8JYkaqVVbAkGbCfdeHoyxcAU")]
-#[derive(Serialize, Deserialize, Default, Debug, PartialEq, Eq, Clone, AbiExample)]
+#[cfg_attr(wbg, feature(wasm_bindgen))]
+// #[wasm_bindgen]
+// #[frozen_abi(digest = "2KnLEqfLcTBQqitE22Pp8JYkaqVVbAkGbCfdeHoyxcAU")]
+#[derive(Serialize, Deserialize, Default, Debug, PartialEq, Eq, Clone/*, AbiExample*/)]
 #[serde(rename_all = "camelCase")]
 pub struct Message {
     /// The message header, identifying signed and read-only `account_keys`.
     // NOTE: Serialization-related changes must be paired with the direct read at sigverify.
-    #[wasm_bindgen(skip)]
+    #[cfg_attr(wbg, feature(wasm_bindgen(skip)))]
+    // #[wasm_bindgen(skip)]
     pub header: MessageHeader,
 
     /// All the account keys used by this transaction.
-    #[wasm_bindgen(skip)]
+    #[cfg_attr(wbg, feature(wasm_bindgen(skip)))]
+    // #[wasm_bindgen(skip)]
     #[serde(with = "short_vec")]
     pub account_keys: Vec<Pubkey>,
 
@@ -123,13 +135,14 @@ pub struct Message {
 
     /// Programs that will be executed in sequence and committed in one atomic transaction if all
     /// succeed.
-    #[wasm_bindgen(skip)]
+    #[cfg_attr(wbg, feature(wasm_bindgen(skip)))]
+    // #[wasm_bindgen(skip)]
     #[serde(with = "short_vec")]
     pub instructions: Vec<CompiledInstruction>,
 }
 
 impl Sanitize for Message {
-    fn sanitize(&self) -> std::result::Result<(), SanitizeError> {
+    fn sanitize(&self) -> core::result::Result<(), SanitizeError> {
         // signing area and read-only non-signing area should not overlap
         if self.header.num_required_signatures as usize
             + self.header.num_readonly_unsigned_accounts as usize
@@ -619,10 +632,12 @@ impl Message {
 #[cfg(test)]
 mod tests {
     #![allow(deprecated)]
+
     use {
         super::*,
         crate::{hash, instruction::AccountMeta, message::MESSAGE_HEADER_LENGTH},
-        std::collections::HashSet,
+        alloc::format,
+        hashbrown::HashSet,
     };
 
     #[test]

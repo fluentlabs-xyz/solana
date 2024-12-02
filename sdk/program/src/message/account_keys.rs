@@ -1,10 +1,12 @@
+use alloc::vec::Vec;
 use {
     crate::{
         instruction::{CompiledInstruction, Instruction},
         message::{v0::LoadedAddresses, CompileError},
         pubkey::Pubkey,
     },
-    std::{collections::BTreeMap, iter::zip, ops::Index},
+    alloc::collections::BTreeMap,
+    core::{iter::zip, ops::Index},
 };
 
 /// Collection of static and dynamically loaded keys used to load accounts
@@ -147,6 +149,7 @@ impl PartialEq for AccountKeys<'_> {
 
 #[cfg(test)]
 mod tests {
+    use alloc::vec;
     use {super::*, crate::instruction::AccountMeta};
 
     fn test_account_keys() -> [Pubkey; 6] {

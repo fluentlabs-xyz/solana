@@ -1,5 +1,7 @@
 //! Vote program instructions
 
+use alloc::string::ToString;
+use alloc::vec::Vec;
 use {
     crate::{
         clock::{Slot, UnixTimestamp},
@@ -16,6 +18,7 @@ use {
             },
         },
     },
+    alloc::vec,
     serde_derive::{Deserialize, Serialize},
 };
 

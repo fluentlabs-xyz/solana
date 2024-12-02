@@ -8,6 +8,8 @@
 //! be removed in a future release
 //!
 //! [borsh]: https://borsh.io/
+
+use alloc::vec::Vec;
 use borsh0_10::{maybestd::io::Error, BorshDeserialize, BorshSchema, BorshSerialize};
 
 /// Get the worst-case packed length for the given BorshSchema
@@ -66,17 +68,38 @@ macro_rules! impl_get_packed_len_v0 {
         pub fn get_packed_len<S: $borsh::BorshSchema>() -> usize {
             let $borsh::schema::BorshSchemaContainer { declaration, definitions } =
                 &S::schema_container();
-            get_declaration_packed_len(declaration, definitions)
+            // TODO get rid of pumping over
+            let mut hashbrown_definitions = hashbrown::hash_map::HashMap::with_capacity(definitions.capacity());
+            definitions.iter().for_each(|(decl, def)| {
+                let def_new = match def {
+                    Definition::Array { length, elements } => {
+                        borsh0_9::schema::Definition::Array {length: *length, elements: elements.clone()}
+                    }
+                    Definition::Sequence { elements } => {
+                        borsh0_9::schema::Definition::Sequence {elements: elements.clone()}
+                    }
+                    Definition::Tuple { elements } => {borsh0_9::schema::Definition::Tuple {elements: elements.clone()}}
+                    Definition::Enum { variants } => {borsh0_9::schema::Definition::Enum {variants: variants.clone()}}
+                    Definition::Struct { fields } => {borsh0_9::schema::Definition::Struct { fields: match fields {
+                        Fields::NamedFields(v) => {Fields::NamedFields(v.clone())}
+                        Fields::UnnamedFields(v) => {Fields::UnnamedFields(v.clone())}
+                        Fields::Empty => {Fields::Empty}
+                    } }}
+                };
+                hashbrown_definitions.insert(decl.clone(), def_new).unwrap();
+            });
+            get_declaration_packed_len(declaration, &hashbrown_definitions)
+            // get_declaration_packed_len(declaration, definitions)
         }
 
         /// Get packed length for the given BorshSchema Declaration
         fn get_declaration_packed_len(
             declaration: &str,
-            definitions: &std::collections::HashMap<$borsh::schema::Declaration, $borsh::schema::Definition>,
+            definitions: &hashbrown::HashMap<$borsh::schema::Declaration, $borsh::schema::Definition>,
         ) -> usize {
             match definitions.get(declaration) {
                 Some($borsh::schema::Definition::Array { length, elements }) => {
-                    *length as usize * get_declaration_packed_len(elements, definitions)
+                    *length as usize * get_declaration_packed_len(elements.as_str(), definitions)
                 }
                 Some($borsh::schema::Definition::Enum { variants }) => {
                     1 + variants
@@ -243,9 +266,11 @@ macro_rules! impl_tests {
         extern crate alloc;
         use {
             super::*,
-            std::{collections::HashMap, mem::size_of},
+            hashbrown::HashMap,
+            core::mem::size_of,
             $borsh::{BorshDeserialize, BorshSerialize},
             $borsh_io::ErrorKind,
+            alloc::vec::Vec,
         };
 
         type Child = [u8; 64];

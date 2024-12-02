@@ -27,16 +27,17 @@
 use {
     borsh::{BorshDeserialize, BorshSchema, BorshSerialize},
     core::convert::TryFrom,
-    thiserror::Error,
+    // thiserror::Error,
 };
+use crate::alloc::string::ToString;
 
-#[derive(Debug, Clone, PartialEq, Eq, Error)]
+#[derive(Debug, Clone, PartialEq, Eq/*, Error*/)]
 pub enum Secp256k1RecoverError {
-    #[error("The hash provided to a secp256k1_recover is invalid")]
+    // #[error("The hash provided to a secp256k1_recover is invalid")]
     InvalidHash,
-    #[error("The recovery_id provided to a secp256k1_recover is invalid")]
+    // #[error("The recovery_id provided to a secp256k1_recover is invalid")]
     InvalidRecoveryId,
-    #[error("The signature provided to a secp256k1_recover is invalid")]
+    // #[error("The signature provided to a secp256k1_recover is invalid")]
     InvalidSignature,
 }
 
@@ -76,7 +77,7 @@ pub const SECP256K1_PUBLIC_KEY_LENGTH: usize = 64;
     Ord,
     PartialOrd,
     Hash,
-    AbiExample,
+    // AbiExample,
 )]
 #[borsh(crate = "borsh")]
 pub struct Secp256k1Pubkey(pub [u8; SECP256K1_PUBLIC_KEY_LENGTH]);

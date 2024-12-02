@@ -5,11 +5,11 @@
 //! The sysvar ID is declared in [`sysvar::slot_hashes`].
 //!
 //! [`sysvar::slot_hashes`]: crate::sysvar::slot_hashes
-
+use alloc::vec::Vec;
 pub use crate::clock::Slot;
 use {
     crate::hash::Hash,
-    std::{
+    core::{
         iter::FromIterator,
         ops::Deref,
         sync::atomic::{AtomicUsize, Ordering},
@@ -78,6 +78,7 @@ impl Deref for SlotHashes {
 
 #[cfg(test)]
 mod tests {
+    use alloc::vec;
     use {super::*, crate::hash::hash};
 
     #[test]

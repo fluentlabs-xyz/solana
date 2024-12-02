@@ -1,14 +1,16 @@
 //! A trait for sanitizing values and members of over the wire messages.
 
-use thiserror::Error;
+// use thiserror::Error;
 
-#[derive(PartialEq, Debug, Error, Eq, Clone)]
+use alloc::vec::Vec;
+
+#[derive(PartialEq, Debug, /*Error, */Eq, Clone)]
 pub enum SanitizeError {
-    #[error("index out of bounds")]
+    // #[error("index out of bounds")]
     IndexOutOfBounds,
-    #[error("value out of bounds")]
+    // #[error("value out of bounds")]
     ValueOutOfBounds,
-    #[error("invalid value")]
+    // #[error("invalid value")]
     InvalidValue,
 }
 

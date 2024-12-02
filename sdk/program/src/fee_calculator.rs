@@ -6,7 +6,7 @@ use {
     log::*,
 };
 
-#[derive(Serialize, Deserialize, Default, PartialEq, Eq, Clone, Copy, Debug, AbiExample)]
+#[derive(Serialize, Deserialize, Default, PartialEq, Eq, Clone, Copy, Debug/*, AbiExample*/)]
 #[serde(rename_all = "camelCase")]
 pub struct FeeCalculator {
     /// The current cost of a signature.
@@ -47,7 +47,7 @@ impl FeeCalculator {
     }
 }
 
-#[derive(Serialize, Deserialize, PartialEq, Eq, Clone, Debug, AbiExample)]
+#[derive(Serialize, Deserialize, PartialEq, Eq, Clone, Debug/*, AbiExample*/)]
 #[serde(rename_all = "camelCase")]
 pub struct FeeRateGovernor {
     // The current cost of a signature  This amount may increase/decrease over time based on
@@ -67,7 +67,7 @@ pub struct FeeRateGovernor {
     pub min_lamports_per_signature: u64,
     pub max_lamports_per_signature: u64,
 
-    // What portion of collected fees are to be destroyed, as a fraction of std::u8::MAX
+    // What portion of collected fees are to be destroyed, as a fraction of u8::MAX
     pub burn_percent: u8,
 }
 
@@ -111,7 +111,7 @@ impl FeeRateGovernor {
         if me.target_signatures_per_slot > 0 {
             // lamports_per_signature can range from 50% to 1000% of
             // target_lamports_per_signature
-            me.min_lamports_per_signature = std::cmp::max(1, me.target_lamports_per_signature / 2);
+            me.min_lamports_per_signature = core::cmp::max(1, me.target_lamports_per_signature / 2);
             me.max_lamports_per_signature = me.target_lamports_per_signature * 10;
 
             // What the cluster should charge at `latest_signatures_per_slot`
@@ -119,7 +119,7 @@ impl FeeRateGovernor {
                 me.max_lamports_per_signature
                     .min(me.min_lamports_per_signature.max(
                         me.target_lamports_per_signature
-                            * std::cmp::min(latest_signatures_per_slot, std::u32::MAX as u64)
+                            * core::cmp::min(latest_signatures_per_slot, u32::MAX as u64)
                             / me.target_signatures_per_slot,
                     ));
 
@@ -137,7 +137,7 @@ impl FeeRateGovernor {
                 // Adjust fee by 5% of target_lamports_per_signature to produce a smooth
                 // increase/decrease in fees over time.
                 let gap_adjust =
-                    std::cmp::max(1, me.target_lamports_per_signature / 20) as i64 * gap.signum();
+                    core::cmp::max(1, me.target_lamports_per_signature / 20) as i64 * gap.signum();
 
                 trace!(
                     "lamports_per_signature gap is {}, adjusting by {}",
@@ -185,6 +185,7 @@ impl FeeRateGovernor {
 
 #[cfg(test)]
 mod tests {
+    use alloc::vec;
     use {
         super::*,
         crate::{pubkey::Pubkey, system_instruction},
@@ -262,7 +263,7 @@ mod tests {
 
     #[test]
     fn test_fee_rate_governor_derived_default() {
-        solana_logger::setup();
+        // solana_logger::setup();
 
         let f0 = FeeRateGovernor::default();
         assert_eq!(
@@ -292,7 +293,7 @@ mod tests {
 
     #[test]
     fn test_fee_rate_governor_derived_adjust() {
-        solana_logger::setup();
+        // solana_logger::setup();
 
         let mut f = FeeRateGovernor {
             target_lamports_per_signature: 100,
@@ -306,7 +307,7 @@ mod tests {
         loop {
             let last_lamports_per_signature = f.lamports_per_signature;
 
-            f = FeeRateGovernor::new_derived(&f, std::u64::MAX);
+            f = FeeRateGovernor::new_derived(&f, u64::MAX);
             info!("[up] f.lamports_per_signature={}", f.lamports_per_signature);
 
             // some maximum target reached

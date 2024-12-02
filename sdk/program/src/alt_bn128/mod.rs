@@ -3,10 +3,11 @@ pub mod prelude {
     pub use crate::alt_bn128::{consts::*, target_arch::*, AltBn128Error};
 }
 
+use alloc::vec::Vec;
 use {
     bytemuck::{Pod, Zeroable},
     consts::*,
-    thiserror::Error,
+    // thiserror::Error,
 };
 
 mod consts {
@@ -43,19 +44,19 @@ mod consts {
 
 // AltBn128Error must be removed once the
 // simplify_alt_bn128_syscall_error_codes feature gets activated
-#[derive(Debug, Error, Clone, PartialEq, Eq)]
+#[derive(Debug, /*Error,*/ Clone, PartialEq, Eq)]
 pub enum AltBn128Error {
-    #[error("The input data is invalid")]
+    // #[error("The input data is invalid")]
     InvalidInputData,
-    #[error("Invalid group data")]
+    // #[error("Invalid group data")]
     GroupError,
-    #[error("Slice data is going out of input data bounds")]
+    // #[error("Slice data is going out of input data bounds")]
     SliceOutOfBounds,
-    #[error("Unexpected error")]
+    // #[error("Unexpected error")]
     UnexpectedError,
-    #[error("Failed to convert a byte slice into a vector {0:?}")]
+    // #[error("Failed to convert a byte slice into a vector {0:?}")]
     TryIntoVecError(Vec<u8>),
-    #[error("Failed to convert projective to affine g1")]
+    // #[error("Failed to convert projective to affine g1")]
     ProjectiveToG1Failed,
 }
 
@@ -373,6 +374,8 @@ mod target_arch {
 
 #[cfg(test)]
 mod tests {
+    use alloc::string::String;
+    use alloc::vec::Vec;
     use {
         crate::alt_bn128::{prelude::*, PodG1},
         ark_bn254::g1::G1Affine,

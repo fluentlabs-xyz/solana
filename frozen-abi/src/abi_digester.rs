@@ -14,7 +14,7 @@ use {
 
 #[derive(Debug)]
 pub struct AbiDigester {
-    data_types: std::rc::Rc<std::cell::RefCell<Vec<String>>>,
+    data_types: alloc::rc::Rc<std::cell::RefCell<Vec<String>>>,
     depth: usize,
     for_enum: bool,
     opaque_type_matcher: Option<String>,

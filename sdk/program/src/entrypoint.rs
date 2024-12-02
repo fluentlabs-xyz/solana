@@ -5,15 +5,17 @@
 //! [`bpf_loader`]: crate::bpf_loader
 
 extern crate alloc;
+
+use alloc::rc::Rc;
 use {
     crate::{account_info::AccountInfo, program_error::ProgramError, pubkey::Pubkey},
     alloc::vec::Vec,
-    std::{
+    core::{
         alloc::Layout,
         cell::RefCell,
         mem::size_of,
         ptr::null_mut,
-        rc::Rc,
+        // rc::Rc,
         result::Result as ResultGeneric,
         slice::{from_raw_parts, from_raw_parts_mut},
     },
@@ -235,7 +237,7 @@ pub struct BumpAllocator {
 /// operating on the prescribed `HEAP_START_ADDRESS` and `HEAP_LENGTH`. Any
 /// other use may overflow and is thus unsupported and at one's own risk.
 #[allow(clippy::arithmetic_side_effects)]
-unsafe impl std::alloc::GlobalAlloc for BumpAllocator {
+unsafe impl alloc::alloc::GlobalAlloc for BumpAllocator {
     #[inline]
     unsafe fn alloc(&self, layout: Layout) -> *mut u8 {
         let pos_ptr = self.start as *mut usize;
@@ -262,7 +264,7 @@ unsafe impl std::alloc::GlobalAlloc for BumpAllocator {
 /// Maximum number of bytes a program may add to an account during a single realloc
 pub const MAX_PERMITTED_DATA_INCREASE: usize = 1_024 * 10;
 
-/// `assert_eq(std::mem::align_of::<u128>(), 8)` is true for BPF but not for some host machines
+/// `assert_eq(core::mem::align_of::<u128>(), 8)` is true for BPF but not for some host machines
 pub const BPF_ALIGN_OF_U128: usize = 8;
 
 /// Deserialize the input arguments
@@ -372,7 +374,7 @@ pub unsafe fn deserialize<'a>(input: *mut u8) -> (&'a Pubkey, Vec<AccountInfo<'a
 
 #[cfg(test)]
 mod test {
-    use {super::*, std::alloc::GlobalAlloc};
+    use {super::*, core::alloc::GlobalAlloc};
 
     #[test]
     fn test_bump_allocator() {

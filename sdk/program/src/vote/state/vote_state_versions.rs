@@ -1,3 +1,4 @@
+use alloc::boxed::Box;
 use super::{vote_state_0_23_5::VoteState0_23_5, vote_state_1_14_11::VoteState1_14_11, *};
 
 #[derive(Debug, Serialize, Deserialize, PartialEq, Eq, Clone)]
