@@ -24,7 +24,7 @@ bs58 = { workspace = true }
 bv = { workspace = true, features = ["serde"], default-features = false }
 bytemuck = { workspace = true, features = ["derive"] }
 itertools = { workspace = true }
-lazy_static = { workspace = true }
+lazy_static = { workspace = true, default-features = false, features = ["spin_no_std"] }
 log = { workspace = true }
 memoffset = { workspace = true }
 num-derive = { workspace = true }

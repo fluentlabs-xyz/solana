@@ -13,7 +13,6 @@
 #![doc(hidden)]
 #![allow(clippy::new_without_default)]
 
-use alloc::vec;
 
 pub mod solana_rpc_client {
     pub mod rpc_client {
@@ -129,7 +128,7 @@ pub mod solana_sdk {
     pub mod account {
         use {
             crate::{clock::Epoch, pubkey::Pubkey},
-            alloc::{vec, vec::Vec},
+            alloc::{vec::Vec},
         };
         #[derive(Clone)]
         pub struct Account {
