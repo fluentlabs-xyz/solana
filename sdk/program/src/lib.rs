@@ -467,7 +467,7 @@
 #![cfg_attr(RUSTC_WITH_SPECIALIZATION, feature(specialization))]
 #![cfg_attr(RUSTC_NEEDS_PROC_MACRO_HYGIENE, feature(proc_macro_hygiene))]
 #![feature(error_in_core)]
-#![no_std]
+#![cfg_attr(not(feature = "std"), no_std)]
 
 // Allows macro expansion of `use ::solana_program::*` to work within this crate
 extern crate alloc;

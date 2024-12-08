@@ -114,7 +114,9 @@ crate-type = [
 [features]
 default = [
 #    "wbg"
+    "std"
 ]
+std = []
 wbg = [
     "dep:wasm-bindgen",
     "dep:js-sys",
