@@ -449,8 +449,9 @@ pub fn create_account(
         AccountMeta::new(*from_pubkey, true),
         AccountMeta::new(*to_pubkey, true),
     ];
+    let system_program_id = system_program::id();
     Instruction::new_with_bincode(
-        system_program::id(),
+        system_program_id,
         &SystemInstruction::CreateAccount {
             lamports,
             space,
