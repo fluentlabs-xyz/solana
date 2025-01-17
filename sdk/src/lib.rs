@@ -177,6 +177,7 @@ extern crate log as logger;
 
 #[macro_use]
 extern crate solana_frozen_abi_macro;
+extern crate core;
 
 #[cfg(test)]
 mod tests {

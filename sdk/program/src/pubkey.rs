@@ -4,6 +4,7 @@
 
 use alloc::string::ToString;
 use alloc::vec::Vec;
+use core::fmt::{Display, Formatter};
 use {
     crate::hash::hashv,
     crate::decode_error::DecodeError,
@@ -115,6 +116,14 @@ impl<T> DecodeError<T> for ParsePubkeyError {
         "ParsePubkeyError"
     }
 }
+
+impl Display for ParsePubkeyError {
+    fn fmt(&self, f: &mut Formatter<'_>) -> fmt::Result {
+        todo!()
+    }
+}
+
+impl core::error::Error for ParsePubkeyError {}
 
 impl FromStr for Pubkey {
     type Err = ParsePubkeyError;
