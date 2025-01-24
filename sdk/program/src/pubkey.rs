@@ -93,7 +93,7 @@ impl From<u64> for PubkeyError {
     Zeroable,
 )]
 #[borsh(crate = "borsh")]
-pub struct Pubkey(pub(crate) [u8; 32]);
+pub struct Pubkey(pub(crate) [u8; PUBKEY_BYTES]);
 
 impl crate::sanitize::Sanitize for Pubkey {}
 

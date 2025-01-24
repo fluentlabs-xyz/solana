@@ -471,6 +471,14 @@ impl<'a> InvokeContext<'a> {
             }
         };
 
+        #[cfg(test)] {
+            println!("builtin_id: {:x?}", builtin_id.to_bytes());
+            let entries = self.programs_loaded_for_tx_batch.entries();
+            for entry in entries {
+                println!("entry.pubkey: {:x?}", entry.0.to_bytes());
+            }
+        }
+
         // The Murmur3 hash value (used by RBPF) of the string "entrypoint"
         const ENTRYPOINT_KEY: u32 = 0x71E3CF81;
         let entry = self

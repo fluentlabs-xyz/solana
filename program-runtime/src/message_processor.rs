@@ -76,7 +76,9 @@ impl MessageProcessor {
             .enumerate()
         {
             let is_precompile =
-                is_precompile(program_id, |id| invoke_context.feature_set.is_active(id));
+                is_precompile(program_id, |id| {
+                    invoke_context.feature_set.is_active(id)
+                });
 
             // Fixup the special instructions key if present
             // before the account pre-values are taken care of
@@ -253,8 +255,14 @@ mod tests {
                 create_loadable_account_for_test("mock_system_program"),
             ),
         ];
-        let mut transaction_context = TransactionContext::new(accounts, Rent::default(), 1, 3);
+        let mut transaction_context = TransactionContext::new(
+            accounts,
+            Rent::default(),
+            1,
+            3
+        );
         let program_indices = vec![vec![2]];
+
         let mut programs_loaded_for_tx_batch = LoadedProgramsForTxBatch::default();
         programs_loaded_for_tx_batch.replenish(
             mock_system_program_id,
@@ -656,6 +664,7 @@ mod tests {
             Arc::new(LoadedProgram::new_builtin(0, 0, MockBuiltin::vm)),
         );
         let mut programs_modified_by_tx = LoadedProgramsForTxBatch::default();
+        let feature_set = FeatureSet::all_enabled();
         let result = MessageProcessor::process_message(
             &message,
             &[vec![0], vec![1]],
@@ -663,7 +672,7 @@ mod tests {
             None,
             &programs_loaded_for_tx_batch,
             &mut programs_modified_by_tx,
-            Arc::new(FeatureSet::all_enabled()),
+            Arc::new(feature_set),
             ComputeBudget::default(),
             &mut ExecuteTimings::default(),
             &sysvar_cache,

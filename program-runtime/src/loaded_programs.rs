@@ -601,6 +601,11 @@ impl LoadedProgramsForTxBatch {
         }
     }
 
+    #[cfg(test)]
+    pub fn entries(&self) -> &HashMap<Pubkey, Arc<LoadedProgram>> {
+        &self.entries
+    }
+
     pub fn new_from_cache<FG: ForkGraph>(
         slot: Slot,
         epoch: Epoch,
