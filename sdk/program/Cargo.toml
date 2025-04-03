@@ -77,8 +77,8 @@ spin = "0.9.8"
 #solana-logger = { workspace = true }
 
 [target.'cfg(target_arch = "wasm32")'.dependencies]
-#fluentbase-sdk = { git = "https://github.com/fluentlabs-xyz/fluentbase", branch = "feat/svm", default-features = false }
-fluentbase-sdk = { path = "../../../fluentbase/crates/sdk", default-features = false }
+fluentbase-sdk = { git = "https://github.com/fluentlabs-xyz/fluentbase", branch = "feat/svm", default-features = false }
+#fluentbase-sdk = { path = "../../../fluentbase/crates/sdk", default-features = false }
 #console_error_panic_hook = { workspace = true }
 #console_log = { workspace = true }
 #getrandom = { workspace = true, default-features = false, features = [] }
