@@ -2289,7 +2289,6 @@ dependencies = [
 [[package]]
 name = "fluentbase-codec"
 version = "0.1.0"
-source = "git+https://github.com/fluentlabs-xyz/fluentbase?branch=feat/svm#abe37f43fb53a79210ab0e7337edac5007421db7"
 dependencies = [
  "alloy-primitives",
  "byteorder",
@@ -2304,7 +2303,6 @@ dependencies = [
 [[package]]
 name = "fluentbase-codec-derive"
 version = "0.1.0"
-source = "git+https://github.com/fluentlabs-xyz/fluentbase?branch=feat/svm#abe37f43fb53a79210ab0e7337edac5007421db7"
 dependencies = [
  "convert_case 0.6.0",
  "crypto-hashes",
@@ -2317,7 +2315,6 @@ dependencies = [
 [[package]]
 name = "fluentbase-sdk"
 version = "0.1.0"
-source = "git+https://github.com/fluentlabs-xyz/fluentbase?branch=feat/svm#abe37f43fb53a79210ab0e7337edac5007421db7"
 dependencies = [
  "fluentbase-codec",
  "fluentbase-sdk-derive",
@@ -2328,7 +2325,6 @@ dependencies = [
 [[package]]
 name = "fluentbase-sdk-derive"
 version = "0.1.0"
-source = "git+https://github.com/fluentlabs-xyz/fluentbase?branch=feat/svm#abe37f43fb53a79210ab0e7337edac5007421db7"
 dependencies = [
  "crypto-hashes",
  "fluentbase-sdk-derive-core",
@@ -2340,7 +2336,6 @@ dependencies = [
 [[package]]
 name = "fluentbase-sdk-derive-core"
 version = "0.0.0"
-source = "git+https://github.com/fluentlabs-xyz/fluentbase?branch=feat/svm#abe37f43fb53a79210ab0e7337edac5007421db7"
 dependencies = [
  "convert_case 0.6.0",
  "crypto-hashes",
@@ -2358,7 +2353,6 @@ dependencies = [
 [[package]]
 name = "fluentbase-types"
 version = "0.1.0"
-source = "git+https://github.com/fluentlabs-xyz/fluentbase?branch=feat/svm#abe37f43fb53a79210ab0e7337edac5007421db7"
 dependencies = [
  "alloy-primitives",
  "alloy-rlp",
@@ -3610,7 +3604,6 @@ dependencies = [
  "base64 0.13.1",
  "digest 0.9.0",
  "hmac-drbg",
- "lazy_static",
  "libsecp256k1-core",
  "libsecp256k1-gen-ecmult",
  "libsecp256k1-gen-genmult",
@@ -5228,7 +5221,6 @@ dependencies = [
 [[package]]
 name = "revm-primitives"
 version = "15.1.0"
-source = "git+https://github.com/fluentlabs-xyz/fluentbase?branch=feat/svm#abe37f43fb53a79210ab0e7337edac5007421db7"
 dependencies = [
  "alloy-eip2930",
  "alloy-eip7702",

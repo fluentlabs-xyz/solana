@@ -15,8 +15,8 @@ byteorder = { version = "1.5", default-features = false }
 elf = "0.0.10"
 getrandom = "0.2.10"
 itertools = "0.10.1"
-#libsecp256k1 = { version = "0.7.1", default-features = false }
-libsecp256k1 = { path = "../../../libsecp256k1", default-features = false }
+libsecp256k1 = { workspace = true, default-features = false }
+#libsecp256k1 = { path = "../../../libsecp256k1", default-features = false }
 log = "0.4.11"
 miow = "0.3.6"
 net2 = "0.2.37"

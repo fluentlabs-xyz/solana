@@ -198,8 +198,8 @@ solana_rbpf = { git = "https://github.com/fluentlabs-xyz/rbpf", branch = "feat/s
 #solana_rbpf = { path = "../rbpf" }
 subtle = { git = "https://github.com/fluentlabs-xyz/subtle", branch = "feat/svm-2.4.1", default-features = false }
 #subtle = { path = "../subtle", default-features = false }
-libsecp256k1 = { git = "https://github.com/fluentlabs-xyz/libsecp256k1", branch = "feat/svm-v0.7.0", default-features = false, features = ["lazy-static-context", "hmac"] }
-#libsecp256k1 = { path = "../libsecp256k1", default-features = false, features = ["lazy-static-context", "hmac"] }
+libsecp256k1 = { git = "https://github.com/fluentlabs-xyz/libsecp256k1", branch = "feat/svm-v0.7.0", default-features = false, features = ["static-context", "hmac"] }
+#libsecp256k1 = { path = "../libsecp256k1", default-features = false, features = ["static-context", "hmac"] }
 digest = { git = "https://github.com/fluentlabs-xyz/traits", branch = "feat/svm-digest-0.10.7", package = "digest", default-features = false, features = ["alloc"] }
 #digest = { path="../traits/digest", default-features = false, features = ["alloc"] }
 either = { git = "https://github.com/fluentlabs-xyz/either", branch = "feat/svm-1.9.0", default-features = false }
@@ -208,7 +208,6 @@ im = { git = "https://github.com/fluentlabs-xyz/im-rs", branch = "feat/svm-15.1.
 #im = { path = "../im-rs", default-features = false }
 light-poseidon = { git = "https://github.com/fluentlabs-xyz/light-poseidon", branch = "feat/svm-0.2.0", default-features = false }
 #light-poseidon = { path = "../light-poseidon/light-poseidon", default-features = false }
-#libsecp256k1 = { version = "0.7.1", default-features = false, features = ["lazy-static-context", "hmac"] }
 serde = { version = "1.0.195", default-features = false, features = ["alloc"] }
 #serde = { version = "1.0.195", default-features = false, features = ["alloc", "derive"] }
 serde_bytes = { version = "0.11.14", default-features = false, features = ["alloc"] }
@@ -221,7 +220,6 @@ rand_chacha = { version = "0.3.1", default-features = false }
 dashmap = "5.5.3"
 derivation-path = { version = "0.2.0", default-features = false }
 dialoguer = "0.10.4"
-#digest = { version = "0.10.7", default-features = false, features = ["alloc"] }
 dir-diff = "0.3.3"
 dirs-next = "2.0.0"
 dlopen2 = "0.5.0"
