@@ -473,8 +473,8 @@
 extern crate alloc;
 extern crate core;
 extern crate self as solana_program;
-#[cfg(target_arch = "wasm32")]
-extern crate fluentbase_sdk;
+// #[cfg(target_arch = "wasm32")]
+// extern crate fluentbase_sdk;
 
 pub mod account_info;
 pub mod address_lookup_table;
