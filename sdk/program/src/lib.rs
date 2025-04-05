@@ -468,13 +468,13 @@
 #![cfg_attr(RUSTC_NEEDS_PROC_MACRO_HYGIENE, feature(proc_macro_hygiene))]
 #![feature(error_in_core)]
 #![cfg_attr(not(feature = "std"), no_std)]
+// #![no_std]
 
 // Allows macro expansion of `use ::solana_program::*` to work within this crate
 extern crate alloc;
 extern crate core;
 extern crate self as solana_program;
 // #[cfg(target_arch = "wasm32")]
-// extern crate fluentbase_sdk;
 
 pub mod account_info;
 pub mod address_lookup_table;

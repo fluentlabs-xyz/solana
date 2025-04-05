@@ -574,8 +574,6 @@ checksum = "89e25b6adfb930f02d1981565a6e5d9c547ac15a96606256d3b59040e5cd4ca3"
 [[package]]
 name = "bincode"
 version = "1.3.3"
-source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "b1f45e9417d87227c7a56d22e471c6206462cba514c7590c09aff4cf6d1ddcad"
 dependencies = [
  "serde",
 ]
@@ -583,7 +581,8 @@ dependencies = [
 [[package]]
 name = "bincode"
 version = "1.3.3"
-source = "git+https://github.com/fluentlabs-xyz/bincode?branch=feat/svm-v1.3.3#5410841d8c9cd33bdde1837a36bf2e9e3a82475b"
+source = "registry+https://github.com/rust-lang/crates.io-index"
+checksum = "b1f45e9417d87227c7a56d22e471c6206462cba514c7590c09aff4cf6d1ddcad"
 dependencies = [
  "serde",
 ]
@@ -690,7 +689,6 @@ checksum = "8d696c370c750c948ada61c69a0ee2cbbb9c50b1019ddb86d9317157a99c2cae"
 [[package]]
 name = "borsh"
 version = "0.9.3"
-source = "git+https://github.com/fluentlabs-xyz/borsh-rs?branch=feat/svm-v0.9.3#4f4dac5b4dc994f3fc37354f2c546901ca70ed28"
 dependencies = [
  "borsh-derive 0.9.3",
  "hashbrown 0.15.2",
@@ -699,7 +697,6 @@ dependencies = [
 [[package]]
 name = "borsh"
 version = "0.10.3"
-source = "git+https://github.com/fluentlabs-xyz/borsh-rs?branch=feat/svm-v0.10.3#ae520a78ef7bead149750c94e53a59a99d3b2151"
 dependencies = [
  "borsh-derive 0.10.3",
  "hashbrown 0.15.2",
@@ -718,7 +715,6 @@ dependencies = [
 [[package]]
 name = "borsh"
 version = "1.2.1"
-source = "git+https://github.com/fluentlabs-xyz/borsh-rs?branch=feat/svm-borsh-derive-v1.2.1#b2c83629add52f852967469c65ac1b0375574a0e"
 dependencies = [
  "borsh-derive 1.2.1",
  "cfg_aliases 0.1.1",
@@ -728,7 +724,6 @@ dependencies = [
 [[package]]
 name = "borsh-derive"
 version = "0.9.3"
-source = "git+https://github.com/fluentlabs-xyz/borsh-rs?branch=feat/svm-v0.9.3#4f4dac5b4dc994f3fc37354f2c546901ca70ed28"
 dependencies = [
  "borsh-derive-internal 0.9.3",
  "borsh-schema-derive-internal 0.9.3",
@@ -740,7 +735,6 @@ dependencies = [
 [[package]]
 name = "borsh-derive"
 version = "0.10.3"
-source = "git+https://github.com/fluentlabs-xyz/borsh-rs?branch=feat/svm-v0.10.3#ae520a78ef7bead149750c94e53a59a99d3b2151"
 dependencies = [
  "borsh-derive-internal 0.10.3",
  "borsh-schema-derive-internal 0.10.3",
@@ -765,7 +759,6 @@ dependencies = [
 [[package]]
 name = "borsh-derive"
 version = "1.2.1"
-source = "git+https://github.com/fluentlabs-xyz/borsh-rs?branch=feat/svm-borsh-derive-v1.2.1#b2c83629add52f852967469c65ac1b0375574a0e"
 dependencies = [
  "once_cell",
  "proc-macro-crate 3.3.0",
@@ -778,7 +771,6 @@ dependencies = [
 [[package]]
 name = "borsh-derive-internal"
 version = "0.9.3"
-source = "git+https://github.com/fluentlabs-xyz/borsh-rs?branch=feat/svm-v0.9.3#4f4dac5b4dc994f3fc37354f2c546901ca70ed28"
 dependencies = [
  "proc-macro2",
  "quote",
@@ -788,7 +780,6 @@ dependencies = [
 [[package]]
 name = "borsh-derive-internal"
 version = "0.10.3"
-source = "git+https://github.com/fluentlabs-xyz/borsh-rs?branch=feat/svm-v0.10.3#ae520a78ef7bead149750c94e53a59a99d3b2151"
 dependencies = [
  "proc-macro2",
  "quote",
@@ -809,7 +800,6 @@ dependencies = [
 [[package]]
 name = "borsh-schema-derive-internal"
 version = "0.9.3"
-source = "git+https://github.com/fluentlabs-xyz/borsh-rs?branch=feat/svm-v0.9.3#4f4dac5b4dc994f3fc37354f2c546901ca70ed28"
 dependencies = [
  "proc-macro2",
  "quote",
@@ -819,7 +809,6 @@ dependencies = [
 [[package]]
 name = "borsh-schema-derive-internal"
 version = "0.10.3"
-source = "git+https://github.com/fluentlabs-xyz/borsh-rs?branch=feat/svm-v0.10.3#ae520a78ef7bead149750c94e53a59a99d3b2151"
 dependencies = [
  "proc-macro2",
  "quote",
@@ -884,7 +873,6 @@ checksum = "1628fb46dfa0b37568d12e5edd512553eccf6a22a78e8bde00bb4aed84d5bdbf"
 [[package]]
 name = "bv"
 version = "0.11.1"
-source = "git+https://github.com/fluentlabs-xyz/bv-rs?branch=feat/svm-0.11.1#f8ce6481356162e86b2daf9860077f737290a06c"
 dependencies = [
  "feature-probe",
  "serde",
@@ -1425,8 +1413,6 @@ checksum = "43da5946c66ffcc7745f48db692ffbb10a83bfe0afd96235c5c2a4fb23994929"
 [[package]]
 name = "crypto-common"
 version = "0.1.6"
-source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "1bfb12502f3fc46cca1bb51ac28df9d618d813cdc3d2f25b9fe775a34af26bb3"
 dependencies = [
  "generic-array",
  "typenum",
@@ -1435,7 +1421,8 @@ dependencies = [
 [[package]]
 name = "crypto-common"
 version = "0.1.6"
-source = "git+https://github.com/fluentlabs-xyz/traits?branch=feat/svm-digest-0.10.7#dd8d4b3fdbf02457d420d4799d5d143ffb1ca3fb"
+source = "registry+https://github.com/rust-lang/crates.io-index"
+checksum = "1bfb12502f3fc46cca1bb51ac28df9d618d813cdc3d2f25b9fe775a34af26bb3"
 dependencies = [
  "generic-array",
  "typenum",
@@ -1679,20 +1666,19 @@ dependencies = [
 [[package]]
 name = "digest"
 version = "0.10.7"
+dependencies = [
+ "crypto-common 0.1.6",
+]
+
+[[package]]
+name = "digest"
+version = "0.10.7"
 source = "registry+https://github.com/rust-lang/crates.io-index"
 checksum = "9ed9a281f7bc9b7576e61468ba615a66a5c8cfdff42420a70aa82701a3b1e292"
 dependencies = [
  "block-buffer 0.10.4",
  "crypto-common 0.1.6 (registry+https://github.com/rust-lang/crates.io-index)",
  "subtle 2.4.1 (registry+https://github.com/rust-lang/crates.io-index)",
-]
-
-[[package]]
-name = "digest"
-version = "0.10.7"
-source = "git+https://github.com/fluentlabs-xyz/traits?branch=feat/svm-digest-0.10.7#dd8d4b3fdbf02457d420d4799d5d143ffb1ca3fb"
-dependencies = [
- "crypto-common 0.1.6 (git+https://github.com/fluentlabs-xyz/traits?branch=feat/svm-digest-0.10.7)",
 ]
 
 [[package]]
@@ -1827,7 +1813,6 @@ dependencies = [
 [[package]]
 name = "either"
 version = "1.9.0"
-source = "git+https://github.com/fluentlabs-xyz/either?branch=feat/svm-1.9.0#76510c2a819f1fde7dbd4dee531f4c3deccd2438"
 
 [[package]]
 name = "either"
@@ -2821,7 +2806,6 @@ checksum = "9007da9cacbd3e6343da136e98b0d2df013f553d35bdec8b518f07bea768e19c"
 [[package]]
 name = "im"
 version = "15.1.0"
-source = "git+https://github.com/fluentlabs-xyz/im-rs?branch=feat/svm-15.1.0#fa7cd3225a33379a80f377945d81439b44c28d8e"
 dependencies = [
  "bitmaps",
  "rand_core 0.6.4",
@@ -3188,7 +3172,6 @@ dependencies = [
 [[package]]
 name = "libsecp256k1"
 version = "0.7.0"
-source = "git+https://github.com/fluentlabs-xyz/libsecp256k1?branch=feat/svm-v0.7.0#7058a6a560192cf0c1c630327de38178fbe81bbe"
 dependencies = [
  "arrayref",
  "base64 0.13.1",
@@ -3206,7 +3189,6 @@ dependencies = [
 [[package]]
 name = "libsecp256k1-core"
 version = "0.3.0"
-source = "git+https://github.com/fluentlabs-xyz/libsecp256k1?branch=feat/svm-v0.7.0#7058a6a560192cf0c1c630327de38178fbe81bbe"
 dependencies = [
  "crunchy",
  "digest 0.9.0",
@@ -3216,7 +3198,6 @@ dependencies = [
 [[package]]
 name = "libsecp256k1-gen-ecmult"
 version = "0.3.0"
-source = "git+https://github.com/fluentlabs-xyz/libsecp256k1?branch=feat/svm-v0.7.0#7058a6a560192cf0c1c630327de38178fbe81bbe"
 dependencies = [
  "libsecp256k1-core",
 ]
@@ -3224,7 +3205,6 @@ dependencies = [
 [[package]]
 name = "libsecp256k1-gen-genmult"
 version = "0.3.0"
-source = "git+https://github.com/fluentlabs-xyz/libsecp256k1?branch=feat/svm-v0.7.0#7058a6a560192cf0c1c630327de38178fbe81bbe"
 dependencies = [
  "libsecp256k1-core",
 ]
@@ -3243,7 +3223,6 @@ dependencies = [
 [[package]]
 name = "light-poseidon"
 version = "0.2.0"
-source = "git+https://github.com/fluentlabs-xyz/light-poseidon?branch=feat/svm-0.2.0#43b0d9caae01f007091338e86f798258dba8d594"
 dependencies = [
  "ark-bn254",
  "ark-ff",
@@ -5400,7 +5379,7 @@ dependencies = [
  "Inflector",
  "assert_matches",
  "base64 0.21.7",
- "bincode 1.3.3 (git+https://github.com/fluentlabs-xyz/bincode?branch=feat/svm-v1.3.3)",
+ "bincode 1.3.3",
  "bs58",
  "bv",
  "lazy_static",
@@ -5468,7 +5447,7 @@ version = "1.18.26"
 dependencies = [
  "arrayref",
  "assert_matches",
- "bincode 1.3.3 (git+https://github.com/fluentlabs-xyz/bincode?branch=feat/svm-v1.3.3)",
+ "bincode 1.3.3",
  "blake3",
  "bv",
  "bytemuck",
@@ -5533,7 +5512,7 @@ dependencies = [
 name = "solana-address-lookup-table-program"
 version = "1.18.26"
 dependencies = [
- "bincode 1.3.3 (git+https://github.com/fluentlabs-xyz/bincode?branch=feat/svm-v1.3.3)",
+ "bincode 1.3.3",
  "bytemuck",
  "log",
  "num-derive 0.4.2",
@@ -5553,7 +5532,7 @@ name = "solana-address-lookup-table-program-tests"
 version = "1.18.26"
 dependencies = [
  "assert_matches",
- "bincode 1.3.3 (git+https://github.com/fluentlabs-xyz/bincode?branch=feat/svm-v1.3.3)",
+ "bincode 1.3.3",
  "solana-address-lookup-table-program",
  "solana-program-test",
  "solana-sdk",
@@ -5613,7 +5592,7 @@ dependencies = [
 name = "solana-banks-server"
 version = "1.18.26"
 dependencies = [
- "bincode 1.3.3 (git+https://github.com/fluentlabs-xyz/bincode?branch=feat/svm-v1.3.3)",
+ "bincode 1.3.3",
  "crossbeam-channel",
  "futures 0.3.31",
  "solana-accounts-db",
@@ -5701,7 +5680,7 @@ name = "solana-bpf-loader-program"
 version = "1.18.26"
 dependencies = [
  "assert_matches",
- "bincode 1.3.3 (git+https://github.com/fluentlabs-xyz/bincode?branch=feat/svm-v1.3.3)",
+ "bincode 1.3.3",
  "byteorder",
  "libsecp256k1",
  "log",
@@ -5722,7 +5701,7 @@ name = "solana-bpf-loader-program-tests"
 version = "1.18.26"
 dependencies = [
  "assert_matches",
- "bincode 1.3.3 (git+https://github.com/fluentlabs-xyz/bincode?branch=feat/svm-v1.3.3)",
+ "bincode 1.3.3",
  "solana-bpf-loader-program",
  "solana-program-test",
  "solana-sdk",
@@ -5860,7 +5839,7 @@ name = "solana-cli"
 version = "1.18.26"
 dependencies = [
  "assert_matches",
- "bincode 1.3.3 (git+https://github.com/fluentlabs-xyz/bincode?branch=feat/svm-v1.3.3)",
+ "bincode 1.3.3",
  "bs58",
  "clap 2.34.0",
  "console",
@@ -5956,7 +5935,7 @@ name = "solana-client"
 version = "1.18.26"
 dependencies = [
  "async-trait",
- "bincode 1.3.3 (git+https://github.com/fluentlabs-xyz/bincode?branch=feat/svm-v1.3.3)",
+ "bincode 1.3.3",
  "crossbeam-channel",
  "dashmap",
  "futures 0.3.31",
@@ -6025,7 +6004,7 @@ dependencies = [
 name = "solana-config-program"
 version = "1.18.26"
 dependencies = [
- "bincode 1.3.3 (git+https://github.com/fluentlabs-xyz/bincode?branch=feat/svm-v1.3.3)",
+ "bincode 1.3.3",
  "chrono",
  "serde",
  "serde_derive",
@@ -6039,7 +6018,7 @@ name = "solana-connection-cache"
 version = "1.18.26"
 dependencies = [
  "async-trait",
- "bincode 1.3.3 (git+https://github.com/fluentlabs-xyz/bincode?branch=feat/svm-v1.3.3)",
+ "bincode 1.3.3",
  "crossbeam-channel",
  "futures-util",
  "indexmap 2.8.0",
@@ -6064,7 +6043,7 @@ version = "1.18.26"
 dependencies = [
  "assert_matches",
  "base64 0.21.7",
- "bincode 1.3.3 (git+https://github.com/fluentlabs-xyz/bincode?branch=feat/svm-v1.3.3)",
+ "bincode 1.3.3",
  "bs58",
  "bytes",
  "chrono",
@@ -6173,7 +6152,7 @@ dependencies = [
 name = "solana-dos"
 version = "1.18.26"
 dependencies = [
- "bincode 1.3.3 (git+https://github.com/fluentlabs-xyz/bincode?branch=feat/svm-v1.3.3)",
+ "bincode 1.3.3",
  "clap 3.2.25",
  "crossbeam-channel",
  "itertools 0.13.0",
@@ -6227,7 +6206,7 @@ name = "solana-entry"
 version = "1.18.26"
 dependencies = [
  "assert_matches",
- "bincode 1.3.3 (git+https://github.com/fluentlabs-xyz/bincode?branch=feat/svm-v1.3.3)",
+ "bincode 1.3.3",
  "crossbeam-channel",
  "dlopen2",
  "lazy_static",
@@ -6248,7 +6227,7 @@ dependencies = [
 name = "solana-faucet"
 version = "1.18.26"
 dependencies = [
- "bincode 1.3.3 (git+https://github.com/fluentlabs-xyz/bincode?branch=feat/svm-v1.3.3)",
+ "bincode 1.3.3",
  "byteorder",
  "clap 2.34.0",
  "crossbeam-channel",
@@ -6287,7 +6266,7 @@ dependencies = [
  "sha2 0.10.8",
  "solana-frozen-abi-macro",
  "solana-logger",
- "subtle 2.4.1 (git+https://github.com/fluentlabs-xyz/subtle?branch=feat/svm-2.4.1)",
+ "subtle 2.4.1",
  "thiserror 1.0.69",
 ]
 
@@ -6306,7 +6285,7 @@ name = "solana-genesis"
 version = "1.18.26"
 dependencies = [
  "base64 0.21.7",
- "bincode 1.3.3 (git+https://github.com/fluentlabs-xyz/bincode?branch=feat/svm-v1.3.3)",
+ "bincode 1.3.3",
  "clap 2.34.0",
  "itertools 0.13.0",
  "serde",
@@ -6377,7 +6356,7 @@ name = "solana-gossip"
 version = "1.18.26"
 dependencies = [
  "assert_matches",
- "bincode 1.3.3 (git+https://github.com/fluentlabs-xyz/bincode?branch=feat/svm-v1.3.3)",
+ "bincode 1.3.3",
  "bv",
  "clap 2.34.0",
  "crossbeam-channel",
@@ -6428,7 +6407,7 @@ name = "solana-install"
 version = "1.18.26"
 dependencies = [
  "atty",
- "bincode 1.3.3 (git+https://github.com/fluentlabs-xyz/bincode?branch=feat/svm-v1.3.3)",
+ "bincode 1.3.3",
  "bzip2",
  "chrono",
  "clap 2.34.0",
@@ -6480,7 +6459,7 @@ name = "solana-ledger"
 version = "1.18.26"
 dependencies = [
  "assert_matches",
- "bincode 1.3.3 (git+https://github.com/fluentlabs-xyz/bincode?branch=feat/svm-v1.3.3)",
+ "bincode 1.3.3",
  "bitflags 2.9.0",
  "bs58",
  "byteorder",
@@ -6600,7 +6579,7 @@ dependencies = [
 name = "solana-loader-v4-program"
 version = "1.18.26"
 dependencies = [
- "bincode 1.3.3 (git+https://github.com/fluentlabs-xyz/bincode?branch=feat/svm-v1.3.3)",
+ "bincode 1.3.3",
  "log",
  "solana-measure",
  "solana-program-runtime",
@@ -6733,7 +6712,7 @@ dependencies = [
 name = "solana-net-utils"
 version = "1.18.26"
 dependencies = [
- "bincode 1.3.3 (git+https://github.com/fluentlabs-xyz/bincode?branch=feat/svm-v1.3.3)",
+ "bincode 1.3.3",
  "clap 3.2.25",
  "crossbeam-channel",
  "log",
@@ -6771,7 +6750,7 @@ version = "1.18.26"
 dependencies = [
  "ahash 0.8.11",
  "assert_matches",
- "bincode 1.3.3 (git+https://github.com/fluentlabs-xyz/bincode?branch=feat/svm-v1.3.3)",
+ "bincode 1.3.3",
  "bv",
  "caps",
  "curve25519-dalek 4.1.3",
@@ -6801,7 +6780,7 @@ name = "solana-poh"
 version = "1.18.26"
 dependencies = [
  "assert_matches",
- "bincode 1.3.3 (git+https://github.com/fluentlabs-xyz/bincode?branch=feat/svm-v1.3.3)",
+ "bincode 1.3.3",
  "core_affinity",
  "crossbeam-channel",
  "log",
@@ -6845,7 +6824,7 @@ dependencies = [
  "array-bytes",
  "assert_matches",
  "base64 0.21.7",
- "bincode 1.3.3 (git+https://github.com/fluentlabs-xyz/bincode?branch=feat/svm-v1.3.3)",
+ "bincode 1.3.3",
  "bitflags 2.9.0",
  "blake3",
  "borsh 0.10.3",
@@ -6891,7 +6870,7 @@ version = "1.18.26"
 dependencies = [
  "assert_matches",
  "base64 0.21.7",
- "bincode 1.3.3 (git+https://github.com/fluentlabs-xyz/bincode?branch=feat/svm-v1.3.3)",
+ "bincode 1.3.3",
  "eager",
  "enum-iterator",
  "itertools 0.13.0",
@@ -6921,7 +6900,7 @@ dependencies = [
  "assert_matches",
  "async-trait",
  "base64 0.21.7",
- "bincode 1.3.3 (git+https://github.com/fluentlabs-xyz/bincode?branch=feat/svm-v1.3.3)",
+ "bincode 1.3.3",
  "chrono-humanize",
  "crossbeam-channel",
  "log",
@@ -7027,7 +7006,7 @@ name = "solana-rpc"
 version = "1.18.26"
 dependencies = [
  "base64 0.21.7",
- "bincode 1.3.3 (git+https://github.com/fluentlabs-xyz/bincode?branch=feat/svm-v1.3.3)",
+ "bincode 1.3.3",
  "bs58",
  "crossbeam-channel",
  "dashmap",
@@ -7088,7 +7067,7 @@ dependencies = [
  "assert_matches",
  "async-trait",
  "base64 0.21.7",
- "bincode 1.3.3 (git+https://github.com/fluentlabs-xyz/bincode?branch=feat/svm-v1.3.3)",
+ "bincode 1.3.3",
  "bs58",
  "crossbeam-channel",
  "futures 0.3.31",
@@ -7151,7 +7130,7 @@ dependencies = [
 name = "solana-rpc-test"
 version = "1.18.26"
 dependencies = [
- "bincode 1.3.3 (git+https://github.com/fluentlabs-xyz/bincode?branch=feat/svm-v1.3.3)",
+ "bincode 1.3.3",
  "bs58",
  "crossbeam-channel",
  "futures-util",
@@ -7182,7 +7161,7 @@ dependencies = [
  "arrayref",
  "assert_matches",
  "base64 0.21.7",
- "bincode 1.3.3 (git+https://github.com/fluentlabs-xyz/bincode?branch=feat/svm-v1.3.3)",
+ "bincode 1.3.3",
  "blake3",
  "bv",
  "bytemuck",
@@ -7261,7 +7240,7 @@ dependencies = [
 name = "solana-runtime-transaction"
 version = "1.18.26"
 dependencies = [
- "bincode 1.3.3 (git+https://github.com/fluentlabs-xyz/bincode?branch=feat/svm-v1.3.3)",
+ "bincode 1.3.3",
  "log",
  "rand 0.8.5",
  "rustc_version",
@@ -7278,7 +7257,7 @@ dependencies = [
  "anyhow",
  "assert_matches",
  "base64 0.21.7",
- "bincode 1.3.3 (git+https://github.com/fluentlabs-xyz/bincode?branch=feat/svm-v1.3.3)",
+ "bincode 1.3.3",
  "bitflags 2.9.0",
  "borsh 1.2.1",
  "bs58",
@@ -7287,7 +7266,7 @@ dependencies = [
  "chrono",
  "curve25519-dalek 4.1.3",
  "derivation-path",
- "digest 0.10.7 (git+https://github.com/fluentlabs-xyz/traits?branch=feat/svm-digest-0.10.7)",
+ "digest 0.10.7",
  "ed25519-dalek",
  "ed25519-dalek-bip32",
  "generic-array",
@@ -7383,7 +7362,7 @@ name = "solana-stake-program"
 version = "1.18.26"
 dependencies = [
  "assert_matches",
- "bincode 1.3.3 (git+https://github.com/fluentlabs-xyz/bincode?branch=feat/svm-v1.3.3)",
+ "bincode 1.3.3",
  "log",
  "proptest",
  "rustc_version",
@@ -7400,7 +7379,7 @@ name = "solana-storage-bigtable"
 version = "1.18.26"
 dependencies = [
  "backoff",
- "bincode 1.3.3 (git+https://github.com/fluentlabs-xyz/bincode?branch=feat/svm-v1.3.3)",
+ "bincode 1.3.3",
  "bytes",
  "bzip2",
  "enum-iterator",
@@ -7431,7 +7410,7 @@ dependencies = [
 name = "solana-storage-proto"
 version = "1.18.26"
 dependencies = [
- "bincode 1.3.3 (git+https://github.com/fluentlabs-xyz/bincode?branch=feat/svm-v1.3.3)",
+ "bincode 1.3.3",
  "bs58",
  "enum-iterator",
  "prost",
@@ -7493,7 +7472,7 @@ name = "solana-system-program"
 version = "1.18.26"
 dependencies = [
  "assert_matches",
- "bincode 1.3.3 (git+https://github.com/fluentlabs-xyz/bincode?branch=feat/svm-v1.3.3)",
+ "bincode 1.3.3",
  "log",
  "serde",
  "serde_derive",
@@ -7507,7 +7486,7 @@ name = "solana-test-validator"
 version = "1.18.26"
 dependencies = [
  "base64 0.21.7",
- "bincode 1.3.3 (git+https://github.com/fluentlabs-xyz/bincode?branch=feat/svm-v1.3.3)",
+ "bincode 1.3.3",
  "crossbeam-channel",
  "log",
  "serde_derive",
@@ -7536,7 +7515,7 @@ dependencies = [
 name = "solana-thin-client"
 version = "1.18.26"
 dependencies = [
- "bincode 1.3.3 (git+https://github.com/fluentlabs-xyz/bincode?branch=feat/svm-v1.3.3)",
+ "bincode 1.3.3",
  "log",
  "rayon",
  "solana-connection-cache",
@@ -7551,7 +7530,7 @@ name = "solana-tokens"
 version = "1.18.26"
 dependencies = [
  "assert_matches",
- "bincode 1.3.3 (git+https://github.com/fluentlabs-xyz/bincode?branch=feat/svm-v1.3.3)",
+ "bincode 1.3.3",
  "chrono",
  "clap 2.34.0",
  "console",
@@ -7584,7 +7563,7 @@ name = "solana-tpu-client"
 version = "1.18.26"
 dependencies = [
  "async-trait",
- "bincode 1.3.3 (git+https://github.com/fluentlabs-xyz/bincode?branch=feat/svm-v1.3.3)",
+ "bincode 1.3.3",
  "futures-util",
  "indexmap 2.8.0",
  "indicatif",
@@ -7605,7 +7584,7 @@ dependencies = [
 name = "solana-transaction-dos"
 version = "1.18.26"
 dependencies = [
- "bincode 1.3.3 (git+https://github.com/fluentlabs-xyz/bincode?branch=feat/svm-v1.3.3)",
+ "bincode 1.3.3",
  "clap 2.34.0",
  "log",
  "rand 0.8.5",
@@ -7634,7 +7613,7 @@ version = "1.18.26"
 dependencies = [
  "Inflector",
  "base64 0.21.7",
- "bincode 1.3.3 (git+https://github.com/fluentlabs-xyz/bincode?branch=feat/svm-v1.3.3)",
+ "bincode 1.3.3",
  "borsh 0.10.4",
  "bs58",
  "lazy_static",
@@ -7656,7 +7635,7 @@ name = "solana-turbine"
 version = "1.18.26"
 dependencies = [
  "assert_matches",
- "bincode 1.3.3 (git+https://github.com/fluentlabs-xyz/bincode?branch=feat/svm-v1.3.3)",
+ "bincode 1.3.3",
  "bytes",
  "crossbeam-channel",
  "futures 0.3.31",
@@ -7810,7 +7789,7 @@ dependencies = [
 name = "solana-vote"
 version = "1.18.26"
 dependencies = [
- "bincode 1.3.3 (git+https://github.com/fluentlabs-xyz/bincode?branch=feat/svm-v1.3.3)",
+ "bincode 1.3.3",
  "crossbeam-channel",
  "itertools 0.13.0",
  "log",
@@ -7830,7 +7809,7 @@ name = "solana-vote-program"
 version = "1.18.26"
 dependencies = [
  "assert_matches",
- "bincode 1.3.3 (git+https://github.com/fluentlabs-xyz/bincode?branch=feat/svm-v1.3.3)",
+ "bincode 1.3.3",
  "log",
  "num-derive 0.4.2",
  "num-traits",
@@ -7940,7 +7919,7 @@ version = "1.18.26"
 dependencies = [
  "aes-gcm-siv",
  "base64 0.21.7",
- "bincode 1.3.3 (git+https://github.com/fluentlabs-xyz/bincode?branch=feat/svm-v1.3.3)",
+ "bincode 1.3.3",
  "bytemuck",
  "byteorder",
  "curve25519-dalek 4.1.3",
@@ -7956,7 +7935,7 @@ dependencies = [
  "sha3 0.9.1",
  "solana-program",
  "solana-sdk",
- "subtle 2.4.1 (git+https://github.com/fluentlabs-xyz/subtle?branch=feat/svm-2.4.1)",
+ "subtle 2.4.1",
  "thiserror 1.0.69",
  "tiny-bip39",
  "zeroize",
@@ -7965,7 +7944,6 @@ dependencies = [
 [[package]]
 name = "solana_rbpf"
 version = "0.8.3"
-source = "git+https://github.com/fluentlabs-xyz/rbpf?branch=feat/svm#2de13c3a381fe8220c636677c5ace81060c0d217"
 dependencies = [
  "byteorder",
  "combine",
@@ -7973,10 +7951,12 @@ dependencies = [
  "goblin",
  "hash32",
  "hashbrown 0.15.2",
+ "libc",
  "log",
  "rand 0.8.5",
  "rustc-demangle",
  "spin 0.9.8",
+ "winapi 0.3.9",
 ]
 
 [[package]]
@@ -8283,6 +8263,10 @@ dependencies = [
  "rustversion",
  "syn 1.0.109",
 ]
+
+[[package]]
+name = "subtle"
+version = "2.4.1"
 
 [[package]]
 name = "subtle"
