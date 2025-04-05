@@ -18,10 +18,10 @@ blake3 = { workspace = true, default-features = false, features = [
     "traits-preview",
 ] }
 borsh = { workspace = true, default-features = false }
-#borsh0-10 = { git="https://github.com/fluentlabs-xyz/borsh-rs", package = "borsh", branch = "feat/svm-v0.10.3", default-features = false }
-borsh0-10 = { package = "borsh", path = "../../../borsh-rs-v0.10.3/borsh", default-features = false }
-#borsh0-9 = { git="https://github.com/fluentlabs-xyz/borsh-rs", package = "borsh", branch = "feat/svm-v0.9.3", default-features = false }
-borsh0-9 = { package = "borsh", path = "../../../borsh-rs-v0.9.3/borsh", default-features = false }
+borsh0-10 = { git="https://github.com/fluentlabs-xyz/borsh-rs", package = "borsh", branch = "feat/svm-v0.10.3", default-features = false }
+#borsh0-10 = { package = "borsh", path = "../../../borsh-rs-v0.10.3/borsh", default-features = false }
+borsh0-9 = { git="https://github.com/fluentlabs-xyz/borsh-rs", package = "borsh", branch = "feat/svm-v0.9.3", default-features = false }
+#borsh0-9 = { package = "borsh", path = "../../../borsh-rs-v0.9.3/borsh", default-features = false }
 libsecp256k1 = { workspace = true, default-features = false, features = ["static-context"] }
 bs58 = { workspace = true, default-features = false }
 bv = { workspace = true, features = ["serde"], default-features = false }
