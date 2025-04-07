@@ -223,7 +223,7 @@ dependencies = [
  "ark-serialize",
  "ark-std",
  "derivative",
- "digest 0.10.7 (registry+https://github.com/rust-lang/crates.io-index)",
+ "digest 0.10.7",
  "itertools 0.10.5",
  "num-bigint 0.4.6",
  "num-traits",
@@ -276,7 +276,7 @@ checksum = "adb7b85a02b83d2f22f89bd5cac66c9c89474240cb6207cb1efc16d098e822a5"
 dependencies = [
  "ark-serialize-derive",
  "ark-std",
- "digest 0.10.7 (registry+https://github.com/rust-lang/crates.io-index)",
+ "digest 0.10.7",
  "num-bigint 0.4.6",
 ]
 
@@ -659,7 +659,7 @@ dependencies = [
  "cc",
  "cfg-if 1.0.0",
  "constant_time_eq",
- "digest 0.10.7 (registry+https://github.com/rust-lang/crates.io-index)",
+ "digest 0.10.7",
 ]
 
 [[package]]
@@ -1222,7 +1222,7 @@ source = "git+https://github.com/fluentlabs-xyz/combine?branch=feat/svm-3.8.1#b7
 dependencies = [
  "ascii",
  "byteorder",
- "either 1.15.0",
+ "either",
  "memchr",
  "unreachable",
 ]
@@ -1433,15 +1433,6 @@ dependencies = [
 ]
 
 [[package]]
-name = "crypto-common"
-version = "0.1.6"
-source = "git+https://github.com/fluentlabs-xyz/traits?branch=feat/svm-digest-0.10.7#dd8d4b3fdbf02457d420d4799d5d143ffb1ca3fb"
-dependencies = [
- "generic-array",
- "typenum",
-]
-
-[[package]]
 name = "crypto-mac"
 version = "0.8.0"
 source = "registry+https://github.com/rust-lang/crates.io-index"
@@ -1512,7 +1503,7 @@ dependencies = [
  "cfg-if 1.0.0",
  "cpufeatures",
  "curve25519-dalek-derive",
- "digest 0.10.7 (registry+https://github.com/rust-lang/crates.io-index)",
+ "digest 0.10.7",
  "fiat-crypto",
  "rand_core 0.6.4",
  "rustc_version",
@@ -1683,16 +1674,8 @@ source = "registry+https://github.com/rust-lang/crates.io-index"
 checksum = "9ed9a281f7bc9b7576e61468ba615a66a5c8cfdff42420a70aa82701a3b1e292"
 dependencies = [
  "block-buffer 0.10.4",
- "crypto-common 0.1.6 (registry+https://github.com/rust-lang/crates.io-index)",
+ "crypto-common",
  "subtle 2.4.1 (registry+https://github.com/rust-lang/crates.io-index)",
-]
-
-[[package]]
-name = "digest"
-version = "0.10.7"
-source = "git+https://github.com/fluentlabs-xyz/traits?branch=feat/svm-digest-0.10.7#dd8d4b3fdbf02457d420d4799d5d143ffb1ca3fb"
-dependencies = [
- "crypto-common 0.1.6 (git+https://github.com/fluentlabs-xyz/traits?branch=feat/svm-digest-0.10.7)",
 ]
 
 [[package]]
@@ -1823,11 +1806,6 @@ dependencies = [
  "quote",
  "syn 1.0.109",
 ]
-
-[[package]]
-name = "either"
-version = "1.9.0"
-source = "git+https://github.com/fluentlabs-xyz/either?branch=feat/svm-1.9.0#76510c2a819f1fde7dbd4dee531f4c3deccd2438"
 
 [[package]]
 name = "either"
@@ -2488,7 +2466,7 @@ version = "0.12.1"
 source = "registry+https://github.com/rust-lang/crates.io-index"
 checksum = "6c49c37c09c17a53d937dfbb742eb3a961d65a994e6bcdcf37e7399d0cc8ab5e"
 dependencies = [
- "digest 0.10.7 (registry+https://github.com/rust-lang/crates.io-index)",
+ "digest 0.10.7",
 ]
 
 [[package]]
@@ -2821,7 +2799,8 @@ checksum = "9007da9cacbd3e6343da136e98b0d2df013f553d35bdec8b518f07bea768e19c"
 [[package]]
 name = "im"
 version = "15.1.0"
-source = "git+https://github.com/fluentlabs-xyz/im-rs?branch=feat/svm-15.1.0#fa7cd3225a33379a80f377945d81439b44c28d8e"
+source = "registry+https://github.com/rust-lang/crates.io-index"
+checksum = "d0acd33ff0285af998aaf9b57342af478078f53492322fafc47450e09397e0e9"
 dependencies = [
  "bitmaps",
  "rand_core 0.6.4",
@@ -2924,7 +2903,7 @@ version = "0.10.5"
 source = "registry+https://github.com/rust-lang/crates.io-index"
 checksum = "b0fd2260e829bddf4cb6ea802289de2f86d6a7a690192fbe91b3f46e0f2c8473"
 dependencies = [
- "either 1.15.0",
+ "either",
 ]
 
 [[package]]
@@ -2933,7 +2912,7 @@ version = "0.13.0"
 source = "registry+https://github.com/rust-lang/crates.io-index"
 checksum = "413ee7dfc52ee1a4949ceeb7dbc8a33f2d6c088194d9f922fb8318faf1f01186"
 dependencies = [
- "either 1.15.0",
+ "either",
 ]
 
 [[package]]
@@ -3936,7 +3915,7 @@ version = "0.11.0"
 source = "registry+https://github.com/rust-lang/crates.io-index"
 checksum = "83a0692ec44e4cf1ef28ca317f14f8f07da2d95ec3fa01f86e4467b725e60917"
 dependencies = [
- "digest 0.10.7 (registry+https://github.com/rust-lang/crates.io-index)",
+ "digest 0.10.7",
 ]
 
 [[package]]
@@ -4599,7 +4578,7 @@ version = "1.10.0"
 source = "registry+https://github.com/rust-lang/crates.io-index"
 checksum = "b418a60154510ca1a002a752ca9714984e21e4241e804d32555251faf8b78ffa"
 dependencies = [
- "either 1.15.0",
+ "either",
  "rayon-core",
 ]
 
@@ -5210,7 +5189,7 @@ checksum = "e3bf829a2d51ab4a5ddf1352d8470c140cadc8301b2ae1789db023f01cedd6ba"
 dependencies = [
  "cfg-if 1.0.0",
  "cpufeatures",
- "digest 0.10.7 (registry+https://github.com/rust-lang/crates.io-index)",
+ "digest 0.10.7",
 ]
 
 [[package]]
@@ -5234,7 +5213,7 @@ checksum = "793db75ad2bcafc3ffa7c68b215fee268f537982cd901d132f89c6343f3a3dc8"
 dependencies = [
  "cfg-if 1.0.0",
  "cpufeatures",
- "digest 0.10.7 (registry+https://github.com/rust-lang/crates.io-index)",
+ "digest 0.10.7",
 ]
 
 [[package]]
@@ -5255,7 +5234,7 @@ version = "0.10.8"
 source = "registry+https://github.com/rust-lang/crates.io-index"
 checksum = "75872d278a8f37ef87fa0ddbda7802605cb18344497949862c0d4dcb291eba60"
 dependencies = [
- "digest 0.10.7 (registry+https://github.com/rust-lang/crates.io-index)",
+ "digest 0.10.7",
  "keccak",
 ]
 
@@ -6274,7 +6253,7 @@ dependencies = [
  "block-buffer 0.10.4",
  "bs58",
  "bv",
- "either 1.9.0",
+ "either",
  "generic-array",
  "im",
  "lazy_static",
@@ -7287,7 +7266,7 @@ dependencies = [
  "chrono",
  "curve25519-dalek 4.1.3",
  "derivation-path",
- "digest 0.10.7 (git+https://github.com/fluentlabs-xyz/traits?branch=feat/svm-digest-0.10.7)",
+ "digest 0.10.7",
  "ed25519-dalek",
  "ed25519-dalek-bip32",
  "generic-array",
@@ -9407,7 +9386,7 @@ version = "4.4.2"
 source = "registry+https://github.com/rust-lang/crates.io-index"
 checksum = "87ba24419a2078cd2b0f2ede2691b6c66d8e47836da3b6db8265ebad47afbfc7"
 dependencies = [
- "either 1.15.0",
+ "either",
  "home",
  "once_cell",
  "rustix 0.38.44",
