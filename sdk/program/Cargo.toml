@@ -84,7 +84,7 @@ hashbrown = { version = "0.15.1", default-features = false, features = [
     "inline-more",
 #    "default-hasher",
 ] }
-spin = { version = "0.9.8", default-features = false }
+spin = { workspace = true, default-features = false }
 
 [target.'cfg(not(target_os = "solana"))'.dev-dependencies]
 #solana-logger = { workspace = true }
